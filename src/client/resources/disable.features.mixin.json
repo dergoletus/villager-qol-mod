@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "de.unipassau.fim.sommercamp.mod.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "RealmsClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
