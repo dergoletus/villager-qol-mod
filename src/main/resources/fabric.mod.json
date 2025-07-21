@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "sommercamp-mod",
+	"version": "${version}",
+	"name": "Sommercamp 2025 Mod",
+	"description": "Dies ist der Mod des Sommercamp 2025 CodeExplorers Projekt",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			
+		],
+		"client": [
+			
+		]
+	},
+	"mixins": [
+		
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
