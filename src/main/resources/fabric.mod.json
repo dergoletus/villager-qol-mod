@@ -1,11 +1,13 @@
 {
 	"schemaVersion": 1,
-	"id": "sommercamp-mod",
+	"id": "villager-qol",
 	"version": "${version}",
-	"name": "Sommercamp 2025 Mod",
-	"description": "Dies ist der Mod des Sommercamp 2025 CodeExplorers Projekt",
+	"name": "Villager-QOL",
+	"description": "Verschiedene Villager-QOL Features",
 	"authors": [
-		"Me!"
+		"Xaver Hagemann",
+		"Benjamin Mallari",
+		"Felix Ziller"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",

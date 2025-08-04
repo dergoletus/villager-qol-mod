@@ -1,5 +1,8 @@
 package de.unipassau.fim.sommercamp.mod;
 
+import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
+import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
+import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -17,17 +20,21 @@ import java.util.Optional;
 
 public class SommercampMod implements ModInitializer {
 
-    public static final String MOD_ID = "sommercamp-mod";
+    public static final String MOD_ID = "villager-qol";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     @Override
     public void onInitialize() {
+        ModItems.init();
+        ModItemGroups.init();
+        ModBlocks.init();
+
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
-              new TradedItem(Items.EMERALD, 1),
+                    new TradedItem(Items.EMERALD, 1),
                     Optional.of(new TradedItem(Items.DIAMOND, 1)),
-              new ItemStack(Items.ENCHANTED_BOOK, 10), 0, 999999, 100,  0)
+                    new ItemStack(Items.ENCHANTED_BOOK, 10), 0, 999999, 100,  0)
             );
             factories.add((entity, random) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 1),
