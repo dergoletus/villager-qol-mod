@@ -1,9 +1,7 @@
-# Fabric Example Mod
+# Sommercamp 2025 Mod
 
-## Setup
+## Links
 
-For setup instructions please see the [fabric documentation page](https://docs.fabricmc.net/develop/getting-started/setting-up-a-development-environment) that relates to the IDE that you are using.
+Fabric Doc: https://docs.fabricmc.net/develop/
 
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+Minecraft Javadoc: https://maven.fabricmc.net/docs/yarn-1.21.5+build.1/
