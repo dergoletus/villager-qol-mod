@@ -7,7 +7,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SommercampMod implements ModInitializer {
+public class VillagerQOLMod implements ModInitializer {
 
     public static final String MOD_ID = "villager-qol";
 

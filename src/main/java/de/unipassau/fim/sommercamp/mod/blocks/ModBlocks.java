@@ -1,9 +1,8 @@
 package de.unipassau.fim.sommercamp.mod.blocks;
 
-import de.unipassau.fim.sommercamp.mod.SommercampMod;
+import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -13,11 +12,8 @@ import net.minecraft.util.Identifier;
 
 public class ModBlocks {
 
-    public static final Block MYSTERY_BLOCK = register("mystery_block",
-            AbstractBlock.Settings.copy(Blocks.STONE));
-
     private static Block register(String id, AbstractBlock.Settings settings) {
-        Identifier identifier = Identifier.of(SommercampMod.MOD_ID, id);
+        Identifier identifier = Identifier.of(VillagerQOLMod.MOD_ID, id);
         RegistryKey<Block> registryKey = RegistryKey.of(Registries.BLOCK.getKey(), identifier);
 
         Block block = new Block(settings.registryKey(registryKey));
@@ -35,6 +31,6 @@ public class ModBlocks {
     }
 
     public static void init() {
-        SommercampMod.LOGGER.info("Adding Blocks");
+        VillagerQOLMod.LOGGER.info("Adding Blocks");
     }
 }

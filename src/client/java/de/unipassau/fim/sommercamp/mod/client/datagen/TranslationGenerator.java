@@ -1,5 +1,6 @@
 package de.unipassau.fim.sommercamp.mod.client.datagen;
 
+import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -15,7 +16,8 @@ public class TranslationGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
+        translationBuilder.add(ModItemGroups.VILLAGER_QOL_GROUP_TRANSLATION_KEY, "Villager QOL");
         translationBuilder.add(ModItems.STOP_STICK, "Stop Stick");
-
+        translationBuilder.add(ModItems.STOP_STICK_DESCRIPTION_TRANSLATION_KEY, "Freezes all Villagers within 16 Blocks in place");
     }
 }
