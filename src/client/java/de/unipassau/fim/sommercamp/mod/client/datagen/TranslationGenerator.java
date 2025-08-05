@@ -1,7 +1,9 @@
 package de.unipassau.fim.sommercamp.mod.client.datagen;
 
+import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
+import de.unipassau.fim.sommercamp.mod.items.VillagerRegisterItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
