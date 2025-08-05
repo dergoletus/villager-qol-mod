@@ -1,5 +1,6 @@
 package de.unipassau.fim.sommercamp.mod.client.datagen;
 
+import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
@@ -16,6 +17,7 @@ public class TranslationGenerator extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(ModItems.STOP_STICK, "Stop Stick");
-
+        translationBuilder.add(ModBlocks.VILLAGER_HUB, "Villager Hub");
+        translationBuilder.add(ModBlocks.VILLAGER_HUB.asItem(), "Villager Hub");
     }
 }

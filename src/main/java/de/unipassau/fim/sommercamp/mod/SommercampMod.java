@@ -1,9 +1,12 @@
 package de.unipassau.fim.sommercamp.mod;
 
+import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
 import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,5 +21,7 @@ public class SommercampMod implements ModInitializer {
         ModItems.init();
         ModItemGroups.init();
         ModBlocks.init();
+        ModBlockEntities.init();
+
     }
 }
