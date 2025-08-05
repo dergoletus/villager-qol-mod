@@ -36,6 +36,9 @@ public class ModItems {
     public static final VillagerRegisterItem VILLAGER_REGISTER = register("villager_register",
             new Item.Settings()
                     .component(DataComponentTypes.LORE, VillagerRegisterItem.createLoreComponent())
+                    .component(ModComponents.VILLAGER_1_UUID, "")
+                    .component(ModComponents.VILLAGER_2_UUID, "")
+                    .component(ModComponents.VILLAGER_3_UUID, "")
                     .maxCount(1),
             VillagerRegisterItem::new);
 
