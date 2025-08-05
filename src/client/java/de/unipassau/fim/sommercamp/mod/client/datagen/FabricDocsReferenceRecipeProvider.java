@@ -27,15 +27,26 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
             public void generate() {
                 RegistryWrapper.Impl<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
 
-                createShaped(RecipeCategory.MISC, Items.CRAFTING_TABLE, 9)
+                createShaped(RecipeCategory.MISC, ModItems.STOP_STICK, 1)
                         .pattern("rdr")
                         .pattern("dxd")
                         .pattern("rdr")
                         .input('r', Items.REDSTONE_BLOCK)
                         .input('d', Items.DIAMOND)
                         .input('x', Items.RED_DYE)
-                        .group("multi_bench") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
-                        .criterion(hasItem(ModItems.STOP_STICK), conditionsFromItem(Items.CRAFTING_TABLE))
+                        .group("multi_bench")
+                        .criterion(hasItem(Items.DIAMOND), conditionsFromItem(Items.DIAMOND))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.MISC, ModItems.RESUME_STICK, 1)
+                        .pattern("rdr")
+                        .pattern("dxd")
+                        .pattern("rdr")
+                        .input('r', Items.REDSTONE_BLOCK)
+                        .input('d', Items.DIAMOND)
+                        .input('x', Items.GREEN_DYE)
+                        .group("multi_bench")
+                        .criterion(hasItem(Items.DIAMOND), conditionsFromItem(Items.DIAMOND))
                         .offerTo(exporter);
             }
         };

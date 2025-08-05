@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "villager-qol:block/villager_hub"
+    }
+  }
+}
