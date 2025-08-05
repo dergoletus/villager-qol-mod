@@ -22,7 +22,6 @@ public class TranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.STOP_STICK, "Stop Stick");
         translationBuilder.add(ModBlocks.VILLAGER_HUB, "Villager Hub");
         translationBuilder.add(ModBlocks.VILLAGER_HUB.asItem(), "Villager Hub");
-        translationBuilder.add(ModItems.STOP_STICK_DESCRIPTION_TRANSLATION_KEY, "Freezes all Villagers within 16 Blocks in place");
         translationBuilder.add(ModItems.STOP_STICK_DESCRIPTION_TRANSLATION_KEY, "Freezes all Villagers within 16 Blocks.");
         translationBuilder.add(ModItems.RESUME_STICK, "Resume Stick");
         translationBuilder.add(ModItems.RESUME_STICK_DESCRIPTION_TRANSLATION_KEY, "Unfreezes all Villagers previously frozen with the Stop Stick within 16 blocks.");
