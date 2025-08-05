@@ -1,6 +1,7 @@
 package de.unipassau.fim.sommercamp.mod.client.datagen;
 
 import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
+import de.unipassau.fim.sommercamp.mod.items.EmeraldBladeItem;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import de.unipassau.fim.sommercamp.mod.items.VillagerRegisterItem;
@@ -29,5 +30,6 @@ public class TranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(0), "Store references to Villagers in here by right-clicking on a villager.");
         translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(1), "Right click again on a Villager Hub Block to connect villagers to the Hub Block.");
         translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(2), "Can store up to 3 Villagers.");
+        translationBuilder.add(ModItems.EMERALD_BLADE, "Emerald Blade");
     }
 }
