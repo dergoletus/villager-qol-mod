@@ -18,6 +18,8 @@ public class ModItemGroups {
             .displayName(Text.translatable(VILLAGER_QOL_GROUP_TRANSLATION_KEY))
             .entries(((displayContext, entries) -> {
                 entries.add(new ItemStack(ModItems.STOP_STICK));
+                entries.add(new ItemStack(ModItems.RESUME_STICK));
+                entries.add(new ItemStack(ModItems.VILLAGER_REGISTER));
             }))
             .build();
 
