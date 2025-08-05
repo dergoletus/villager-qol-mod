@@ -1,5 +1,6 @@
 package de.unipassau.fim.sommercamp.mod;
 
+import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
 import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SommercampMod implements ModInitializer {
+public class VillagerQOLMod implements ModInitializer {
 
     public static final String MOD_ID = "villager-qol";
 
@@ -41,6 +42,7 @@ public class SommercampMod implements ModInitializer {
         ModItems.init();
         ModItemGroups.init();
         ModBlocks.init();
+        ModBlockEntities.init();
 
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
