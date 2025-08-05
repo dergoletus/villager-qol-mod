@@ -17,13 +17,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"de.unipassau.fim.sommercamp.mod.SommercampMod"
+			"de.unipassau.fim.sommercamp.mod.VillagerQOLMod"
 		],
 		"fabric-datagen": [
-			"de.unipassau.fim.sommercamp.mod.client.datagen.SommercampModDatagen"
+			"de.unipassau.fim.sommercamp.mod.client.datagen.VillagerQOLModDatagen"
 		],
 		"client": [
-			"de.unipassau.fim.sommercamp.mod.client.SommercampModClient"
+			"de.unipassau.fim.sommercamp.mod.client.VillagerQOLModClient"
 		]
 	},
 	"mixins": [

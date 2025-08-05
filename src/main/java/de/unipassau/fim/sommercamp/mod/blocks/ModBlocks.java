@@ -3,6 +3,7 @@ package de.unipassau.fim.sommercamp.mod.blocks;
 import de.unipassau.fim.sommercamp.mod.BlockEntities.VillagerHubBlock;
 import de.unipassau.fim.sommercamp.mod.SommercampMod;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -26,6 +27,7 @@ public class ModBlocks {
             AbstractBlock.Settings.create(),
             true
     );
+
 
     private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
         // Create a registry key for the block
@@ -58,7 +60,7 @@ public class ModBlocks {
 
 
     public static void init() {
-        SommercampMod.LOGGER.info("Adding Blocks");
+        VillagerQOLMod.LOGGER.info("Adding Blocks");
     }
 
-    }
+}

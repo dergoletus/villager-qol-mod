@@ -1,5 +1,5 @@
 {
-  "block.villager-qol.villager_hub": "Villager Hub",
   "item.villager-qol.stop_stick": "Stop Stick",
-  "item.villager-qol.villager_hub": "Villager Hub"
+  "item.villager-qol.stop_stick.description": "Freezes all Villagers within 16 Blocks in place",
+  "itemGroup.villager_qol_group": "Villager QOL"
 }
