@@ -1,0 +1,48 @@
+package de.unipassau.fim.sommercamp.mod.client.datagen;
+
+import java.util.concurrent.CompletableFuture;
+
+import de.unipassau.fim.sommercamp.mod.items.ModItems;
+import net.minecraft.data.recipe.RecipeExporter;
+import net.minecraft.data.recipe.RecipeGenerator;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.registry.tag.ItemTags;
+
+public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
+    public FabricDocsReferenceRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, registriesFuture);
+    }
+
+    @Override
+    protected RecipeGenerator getRecipeGenerator(RegistryWrapper.WrapperLookup registryLookup, RecipeExporter exporter) {
+        return new RecipeGenerator(registryLookup, exporter) {
+            @Override
+            public void generate() {
+                RegistryWrapper.Impl<Item> itemLookup = registries.getOrThrow(RegistryKeys.ITEM);
+
+                createShaped(RecipeCategory.MISC, Items.CRAFTING_TABLE, 9)
+                        .pattern("rdr")
+                        .pattern("dxd")
+                        .pattern("rdr")
+                        .input('r', Items.REDSTONE_BLOCK)
+                        .input('d', Items.DIAMOND)
+                        .input('x', Items.RED_DYE)
+                        .group("multi_bench") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(ModItems.STOP_STICK), conditionsFromItem(Items.CRAFTING_TABLE))
+                        .offerTo(exporter);
+            }
+        };
+    }
+
+    @Override
+    public String getName() {
+        return "FabricDocsReferenceRecipeProvider";
+    }
+}
