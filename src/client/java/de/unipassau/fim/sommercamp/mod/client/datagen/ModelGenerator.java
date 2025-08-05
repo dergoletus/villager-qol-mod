@@ -21,6 +21,7 @@ public class ModelGenerator extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ModItems.STOP_STICK, Models.HANDHELD);
-
+        itemModelGenerator.register(ModItems.VILLAGER_REGISTER, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.RESUME_STICK, Models.HANDHELD);
     }
 }
