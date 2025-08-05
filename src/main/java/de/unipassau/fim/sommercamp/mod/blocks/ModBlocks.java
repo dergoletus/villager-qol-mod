@@ -1,14 +1,9 @@
 package de.unipassau.fim.sommercamp.mod.blocks;
 
 import de.unipassau.fim.sommercamp.mod.BlockEntities.VillagerHubBlock;
-import de.unipassau.fim.sommercamp.mod.SommercampMod;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -50,11 +45,11 @@ public class ModBlocks {
     }
 
     private static RegistryKey<Block> keyOfBlock(String name) {
-        return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(SommercampMod.MOD_ID, name));
+        return RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(VillagerQOLMod.MOD_ID, name));
     }
 
     private static RegistryKey<Item> keyOfItem(String name) {
-            return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(SommercampMod.MOD_ID, name));
+            return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(VillagerQOLMod.MOD_ID, name));
     }
 
 

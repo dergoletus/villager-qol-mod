@@ -1,5 +1,6 @@
 package de.unipassau.fim.sommercamp.mod;
 
+import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
 import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
@@ -29,6 +30,7 @@ public class VillagerQOLMod implements ModInitializer {
         ModItems.init();
         ModItemGroups.init();
         ModBlocks.init();
+        ModBlockEntities.init();
 
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
