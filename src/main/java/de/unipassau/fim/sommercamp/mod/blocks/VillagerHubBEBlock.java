@@ -3,10 +3,13 @@ package de.unipassau.fim.sommercamp.mod.blocks;
 import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerFactory;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -49,5 +52,16 @@ public class VillagerHubBEBlock extends ChestBlockEntity implements ScreenHandle
         return Collections.unmodifiableList(villagerUUIDs);
     }
 
-
+    public static VillagerEntity findVillagerByUUID(World world, String UUID) {
+        if (world instanceof ServerWorld serverWorld) {
+            // This list will always just contain 1 Element because there can only be one villager with a specified UUID.
+            List<? extends VillagerEntity> villagerList = serverWorld.getEntitiesByType(
+                    EntityType.VILLAGER,
+                    (villager) -> villager.getUuidAsString().equals(UUID));
+            return villagerList.isEmpty() ? null : villagerList.get(0);
+        } else {
+            System.out.println("Non-server world given.");
+            return null;
+        }
+    }
 }
