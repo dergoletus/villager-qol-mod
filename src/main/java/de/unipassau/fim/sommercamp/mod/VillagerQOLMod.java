@@ -2,6 +2,7 @@ package de.unipassau.fim.sommercamp.mod;
 
 import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
 import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
+import de.unipassau.fim.sommercamp.mod.events.ModEvents;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import de.unipassau.fim.sommercamp.mod.network.payload;
@@ -37,6 +38,7 @@ public class VillagerQOLMod implements ModInitializer {
         ModItemGroups.init();
         ModBlocks.init();
         ModBlockEntities.init();
+        ModEvents.init();
         PayloadTypeRegistry.playS2C().register(payload.VHpayload.ID, payload.VHpayload.CODEC);
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
