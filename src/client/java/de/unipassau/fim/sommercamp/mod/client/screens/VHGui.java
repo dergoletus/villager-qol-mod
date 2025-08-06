@@ -1,38 +1,41 @@
 package de.unipassau.fim.sommercamp.mod.client.screens;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import de.unipassau.fim.sommercamp.mod.screens.VHScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.toast.SystemToast;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 
 @Environment(EnvType.CLIENT)
 
-public class VHGui extends Screen {
+public class VHGui extends HandledScreen {
 
-    public VHGui(Text title) {
-        super(title);
+    public VHGui(VHScreenHandler handler, PlayerInventory inventory, Text title) {
+        super(handler, inventory, title);
+        this.backgroundWidth = 176;
+        this.backgroundHeight = 166;
     }
 
     @Override
     protected void init() {
-        ButtonWidget buttonWidget = ButtonWidget.builder(Text.of("Villager Hub"), (btn) -> {
-            // When the button is clicked, we can display a toast to the screen.
-            this.client.getToastManager().add(
-                    SystemToast.create(this.client, SystemToast.Type.NARRATOR_TOGGLE, Text.of("Hello World!"), Text.of("This is a toast."))
-            );
-        }).dimensions(40, 40, 120, 20).build();
-        // It's recommended to use the fixed height of 20 to prevent rendering issues with the button
-        // textures.
-        MinecraftClient.getInstance().setScreen(
-                new VHGui(Text.empty())
-        );
-        // Register the button widget.
-        this.addDrawableChild(buttonWidget);
 
+    }
+
+    @Override
+    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
+        RenderSystem.setShaderTexture(0, TEXTURE);
+        drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+
+        // Draw your custom info
+        int value = handler.getSomeValue();
+        textRenderer.draw(matrices, "Value: " + value, x + 10, y + 10, 0xFFFFFF);
     }
 
     @Override

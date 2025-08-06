@@ -24,8 +24,6 @@ import java.util.List;
 
 public class VillagerHubBlock extends BlockWithEntity{
 
-    private List<String> villagerUUIDs = new ArrayList<>(3);
-
     public VillagerHubBlock(Settings settings) {
         super(settings);
     }
@@ -55,18 +53,6 @@ public class VillagerHubBlock extends BlockWithEntity{
         return new VillagerHubBEBlock(pos, state);
     }
 
-    public void addVillager(String uuid) {
-        if (villagerUUIDs.size() < 3 && !villagerUUIDs.contains(uuid)){
-            villagerUUIDs.add(uuid);
-        }
-    }
 
-    public void removeVillager(String uuid){
-        villagerUUIDs.remove(uuid);
-    }
-
-    public List<String> getVillagerUUIDs(){
-        return Collections.unmodifiableList(villagerUUIDs);
-    }
 
 }

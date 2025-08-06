@@ -12,6 +12,7 @@ public class VillagerQOLModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        ScreenRegistry.register(ModScreenHandlers.VH_SCREEN_HANDLER, VHGui::new);
         ClientPlayNetworking.registerGlobalReceiver(payload.VHpayload.ID, (payload, context) -> {
             ClientWorld world = context.client().world;
 
