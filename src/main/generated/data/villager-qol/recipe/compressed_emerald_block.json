@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "muli_bench",
+  "key": {
+    "e": "villager-qol:compressed_emerald"
+  },
+  "pattern": [
+    "eee",
+    "eee",
+    "eee"
+  ],
+  "result": {
+    "count": 1,
+    "id": "villager-qol:compressed_emerald_block"
+  }
+}

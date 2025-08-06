@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "villager-qol:block/compressed_emerald_block"
+  }
+}

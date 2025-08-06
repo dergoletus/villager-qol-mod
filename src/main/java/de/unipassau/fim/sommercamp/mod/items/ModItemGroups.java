@@ -1,6 +1,7 @@
 package de.unipassau.fim.sommercamp.mod.items;
 
 import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
+import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,8 @@ public class ModItemGroups {
                 entries.add(new ItemStack(ModItems.RESUME_STICK));
                 entries.add(new ItemStack(ModItems.VILLAGER_REGISTER));
                 entries.add(new ItemStack(ModItems.EMERALD_BLADE));
+                entries.add(new ItemStack(ModItems.COMPRESSED_EMERALD));
+                entries.add(new ItemStack(ModBlocks.COMPRESSED_EMERALD_BLOCK));
             }))
             .build();
 
