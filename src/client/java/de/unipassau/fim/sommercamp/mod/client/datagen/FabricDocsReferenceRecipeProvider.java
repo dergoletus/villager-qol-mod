@@ -9,12 +9,14 @@ import net.minecraft.data.recipe.RecipeGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.util.Identifier;
 
 public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
     public FabricDocsReferenceRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
@@ -56,7 +58,12 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
                         .input('e', Items.EMERALD_BLOCK)
                         .group("muli_bench")
                         .criterion(hasItem(Items.EMERALD), conditionsFromItem(Items.EMERALD))
-                        .offerTo(exporter);
+                        .offerTo(exporter, RegistryKey.of(RegistryKeys.RECIPE, Identifier.of("emerald_block_to_compressed")));
+                createShapeless(RecipeCategory.MISC, Items.EMERALD_BLOCK, 9)
+                        .input(ModItems.COMPRESSED_EMERALD)
+                        .criterion(hasItem(ModItems.COMPRESSED_EMERALD), conditionsFromItem(ModItems.COMPRESSED_EMERALD))
+                        .offerTo(exporter, RegistryKey.of(RegistryKeys.RECIPE, Identifier.of("compressed_emerald_reversed")));
+
                 createShaped(RecipeCategory.BUILDING_BLOCKS, ModItems.COMPRESSED_EMERALD_BLOCK, 1)
                         .pattern("eee")
                         .pattern("eee")
@@ -64,7 +71,12 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
                         .input('e', ModItems.COMPRESSED_EMERALD)
                         .group("muli_bench")
                         .criterion(hasItem(Items.EMERALD_BLOCK), conditionsFromItem(Items.EMERALD_BLOCK))
-                        .offerTo(exporter);
+                        .offerTo(exporter, RegistryKey.of(RegistryKeys.RECIPE, Identifier.of("compressed_emerald_to_block")));
+                createShapeless(RecipeCategory.MISC, ModItems.COMPRESSED_EMERALD, 9)
+                        .input(ModItems.COMPRESSED_EMERALD_BLOCK)
+                        .criterion(hasItem(ModItems.COMPRESSED_EMERALD_BLOCK), conditionsFromItem(ModItems.COMPRESSED_EMERALD_BLOCK))
+                        .offerTo(exporter, RegistryKey.of(RegistryKeys.RECIPE, Identifier.of("compressed_block_reversed")));
+
                 createShaped(RecipeCategory.COMBAT, ModItems.EMERALD_BLADE, 1)
                         .pattern("e")
                         .pattern("e")

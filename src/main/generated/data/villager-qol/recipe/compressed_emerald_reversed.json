@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "villager-qol:compressed_emerald"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minecraft:emerald_block"
+  }
+}
