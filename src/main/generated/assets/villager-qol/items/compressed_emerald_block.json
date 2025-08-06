@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "villager-qol:item/compressed_emerald_block"
+    "model": "villager-qol:block/compressed_emerald_block"
   }
 }
