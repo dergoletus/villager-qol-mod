@@ -1,6 +1,7 @@
 package de.unipassau.fim.sommercamp.mod.items;
 
 import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
+import de.unipassau.fim.sommercamp.mod.components.ModComponents;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.Item;
@@ -10,7 +11,6 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -36,9 +36,7 @@ public class ModItems {
     public static final VillagerRegisterItem VILLAGER_REGISTER = register("villager_register",
             new Item.Settings()
                     .component(DataComponentTypes.LORE, VillagerRegisterItem.createLoreComponent())
-                    .component(ModComponents.VILLAGER_1_UUID, "")
-                    .component(ModComponents.VILLAGER_2_UUID, "")
-                    .component(ModComponents.VILLAGER_3_UUID, "")
+                    .component(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT, "")
                     .maxCount(1),
             VillagerRegisterItem::new);
 
