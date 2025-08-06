@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "multi_bench",
+  "key": {
+    "d": "minecraft:diamond",
+    "r": "minecraft:redstone_block",
+    "x": "minecraft:red_dye"
+  },
+  "pattern": [
+    "rdr",
+    "dxd",
+    "rdr"
+  ],
+  "result": {
+    "count": 9,
+    "id": "minecraft:crafting_table"
+  }
+}
