@@ -64,13 +64,17 @@ public class VillagerRegisterItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         context.getWorld().getBlockEntity(context.getBlockPos(), ModBlockEntities.VILLAGER_HUB_BE_BLOCK_BLOCK_ENTITY_TYPE)
-                .ifPresentOrElse((blockEntity) -> {
+                .ifPresentOrElse((villagerHubBlockEntity) -> {
                     String villagerUUID = context.getStack().get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT);
                     if (villagerUUID.isEmpty()) {
                        context.getPlayer().sendMessage(Text.literal("Your villager register is empty! Fill it up by right-clicking a villager."), true);
                     }
-
-                    // TODO: Villager UUID dem Villager Hub Block übergeben
+                    if (villagerHubBlockEntity.getVillagerUUIDs().size() == villagerHubBlockEntity.villagerCapacity) {
+                        context.getPlayer().sendMessage(Text.literal("This Villager Hub Block is full!"), true);
+                    }
+                    villagerHubBlockEntity.addVillager(villagerUUID);
+                    context.getPlayer().sendMessage(Text.literal("UUID " + villagerUUID + " stored in Villager Hub Block."), true);
+                    context.getStack().set(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT, "");
                 }, () -> {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {

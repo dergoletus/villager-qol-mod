@@ -2,11 +2,8 @@ package de.unipassau.fim.sommercamp.mod.items;
 
 import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
 import de.unipassau.fim.sommercamp.mod.components.ModComponents;
-import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.LoreComponent;
-import net.minecraft.entity.DamageUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
