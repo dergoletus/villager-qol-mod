@@ -2,9 +2,13 @@ package de.unipassau.fim.sommercamp.mod.items;
 
 import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
 import de.unipassau.fim.sommercamp.mod.components.ModComponents;
+import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.LoreComponent;
+import net.minecraft.entity.DamageUtil;
 import net.minecraft.item.Item;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -44,6 +48,7 @@ public class ModItems {
     public static final String EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.emerald_blade.description";
     public static final EmeraldBladeItem EMERALD_BLADE = register("emerald_blade",
             new Item.Settings()
+                    .sword(ToolMaterial.NETHERITE, 1F, .00000000001F)
                     .component(DataComponentTypes.LORE, new LoreComponent(
                             List.of(Text.translatable(EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY))))
                     .maxCount(1),
