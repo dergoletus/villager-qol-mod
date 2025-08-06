@@ -27,11 +27,7 @@ public class VHGui extends Screen {
         // It's recommended to use the fixed height of 20 to prevent rendering issues with the button
         // textures.
         this.addDrawableChild(buttonWidget);
-
-
         // Register the button widget.
-
-
     }
 
     @Override

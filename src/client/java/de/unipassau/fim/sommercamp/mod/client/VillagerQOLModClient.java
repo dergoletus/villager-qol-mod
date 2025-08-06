@@ -1,7 +1,7 @@
 package de.unipassau.fim.sommercamp.mod.client;
 
 import de.unipassau.fim.sommercamp.mod.client.screens.VHGui;
-import de.unipassau.fim.sommercamp.mod.network.payload;
+import de.unipassau.fim.sommercamp.mod.network.Payload;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
@@ -12,7 +12,7 @@ public class VillagerQOLModClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientPlayNetworking.registerGlobalReceiver(payload.VHpayload.ID, (payload, context) -> {
+        ClientPlayNetworking.registerGlobalReceiver(Payload.VHPayload.ID, (payload, context) -> {
             ClientWorld world = context.client().world;
 
             if (world == null) {
@@ -20,6 +20,7 @@ public class VillagerQOLModClient implements ClientModInitializer {
             }
 
             System.out.println("used");
+            System.out.println(payload.villagerInfos().get(0).profession());
             MinecraftClient.getInstance().setScreen(
                     new VHGui(Text.empty())
             );

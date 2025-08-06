@@ -2,15 +2,14 @@ package de.unipassau.fim.sommercamp.mod.BlockEntities;
 
 
 import com.mojang.serialization.MapCodec;
-import de.unipassau.fim.sommercamp.mod.blocks.VillagerHubBEBlock;
+import de.unipassau.fim.sommercamp.mod.blocks.VillagerHubBlockEntity;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
-import de.unipassau.fim.sommercamp.mod.network.payload;
+import de.unipassau.fim.sommercamp.mod.network.Payload;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -23,7 +22,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class VillagerHubBlock extends BlockWithEntity{
@@ -45,22 +43,22 @@ public class VillagerHubBlock extends BlockWithEntity{
             return ActionResult.PASS;
         }
 
-        payload.VHpayload payload = new payload.VHpayload(player.getBlockPos());
-        if(!world.isClient && world.getBlockEntity(pos) instanceof VillagerHubBEBlock villagerHubBEBlock){
-            for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
-                ServerPlayNetworking.send(user, payload);
-            }
-        }
+        // Sammeln von Villager UUIDs und ihren Professions
+        List<Payload.VillagerInfo> villagerInfos = new ArrayList<>();
         if(!world.isClient) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof VillagerHubBEBlock villagerHubBlockEntity) {
-                System.out.println(villagerHubBlockEntity.getVillagerUUIDs().get(0));
-
+            if (blockEntity instanceof VillagerHubBlockEntity villagerHubBlockEntity) {
                 for (String villagerUUID : villagerHubBlockEntity.getVillagerUUIDs()) {
-                    VillagerEntity villager = VillagerHubBEBlock.findVillagerByUUID(world, villagerUUID);
-                    VillagerProfession profession = villager.getVillagerData().profession().value();
-                    System.out.println(profession);
+                    VillagerEntity villager = VillagerHubBlockEntity.findVillagerByUUID(world, villagerUUID);
+                    String profession = villager.getVillagerData().profession().getIdAsString();
+                    villagerInfos.add(new Payload.VillagerInfo(villagerUUID, profession));
                 }
+            }
+        }
+        Payload.VHPayload payload = new Payload.VHPayload(player.getBlockPos(), villagerInfos);
+        if(!world.isClient && world.getBlockEntity(pos) instanceof VillagerHubBlockEntity villagerHubBlockEntity){
+            for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
+                ServerPlayNetworking.send(user, payload);
             }
         }
         return ActionResult.SUCCESS;
@@ -69,6 +67,6 @@ public class VillagerHubBlock extends BlockWithEntity{
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new VillagerHubBEBlock(pos, state);
+        return new VillagerHubBlockEntity(pos, state);
     }
 }

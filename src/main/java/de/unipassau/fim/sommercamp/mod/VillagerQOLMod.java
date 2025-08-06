@@ -5,7 +5,7 @@ import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import de.unipassau.fim.sommercamp.mod.events.ModEvents;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
-import de.unipassau.fim.sommercamp.mod.network.payload;
+import de.unipassau.fim.sommercamp.mod.network.Payload;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -45,7 +45,7 @@ public class VillagerQOLMod implements ModInitializer {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             restockCooldowns.replaceAll((uuid, ticks) -> Math.max(0, ticks - 1));
         });
-        PayloadTypeRegistry.playS2C().register(payload.VHpayload.ID, payload.VHpayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(Payload.VHPayload.ID, Payload.VHPayload.CODEC);
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
                 new TradedItem(Items.EMERALD, 64),

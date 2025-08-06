@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class VillagerHubBEBlock extends ChestBlockEntity implements ScreenHandlerFactory {
+public class VillagerHubBlockEntity extends ChestBlockEntity implements ScreenHandlerFactory {
 
     public final int villagerCapacity = 3;
     private final List<String> villagerUUIDs = new ArrayList<>(villagerCapacity);
 
-    public VillagerHubBEBlock(BlockPos pos, BlockState state) {
+    public VillagerHubBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.VILLAGER_HUB_BE_BLOCK_BLOCK_ENTITY_TYPE, pos, state);
     }
 
@@ -63,5 +63,14 @@ public class VillagerHubBEBlock extends ChestBlockEntity implements ScreenHandle
             System.out.println("Non-server world given.");
             return null;
         }
+    }
+
+    public static List<VillagerEntity> findVillagersByUUID(World world, List<String> UUIDList) {
+        List<VillagerEntity> villagerEntities = new ArrayList<>();
+        for (String UUID : UUIDList) {
+            VillagerEntity villagerEntity = findVillagerByUUID(world, UUID);
+            villagerEntities.add(villagerEntity);
+        }
+        return villagerEntities;
     }
 }
