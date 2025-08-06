@@ -21,7 +21,7 @@ public class EmeraldBladeItem extends Item {
     @Override
     public ActionResult use(World world, PlayerEntity player, Hand hand) {
         if (!world.isClient()) {
-            var instance = new StatusEffectInstance(StatusEffects.HERO_OF_THE_VILLAGE, 2000, 255, false, true, true);
+            var instance = new StatusEffectInstance(StatusEffects.HERO_OF_THE_VILLAGE, 20000, 255, false, true, true);
             player.addStatusEffect(instance);
         }
 

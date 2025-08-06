@@ -31,5 +31,6 @@ public class TranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(1), "Right click again on a Villager Hub Block to connect villagers to the Hub Block.");
         translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(2), "Can store up to 3 Villagers.");
         translationBuilder.add(ModItems.EMERALD_BLADE, "Emerald Blade");
+        translationBuilder.add(ModItems.EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY, "The Emerald Blade forces villagers to reduce there prices");
     }
 }

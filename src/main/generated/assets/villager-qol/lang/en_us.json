@@ -1,6 +1,7 @@
 {
   "block.villager-qol.villager_hub": "Villager Hub",
   "item.villager-qol.emerald_blade": "Emerald Blade",
+  "item.villager-qol.emerald_blade.description": "The Emerald Blade forces villagers to reduce there prices",
   "item.villager-qol.resume_stick": "Resume Stick",
   "item.villager-qol.resume_stick.description": "Unfreezes all Villagers previously frozen with the Stop Stick within 16 blocks.",
   "item.villager-qol.stop_stick": "Stop Stick",
