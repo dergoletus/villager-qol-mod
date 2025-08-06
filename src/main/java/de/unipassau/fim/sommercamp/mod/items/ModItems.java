@@ -48,6 +48,17 @@ public class ModItems {
                     .maxCount(1),
                     EmeraldBladeItem::new);
 
+    public static final String COMPRESSED_EMERALD_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.compressed_emerald.description";
+    public static final Item COMPRESSED_EMERALD = register("compressed_emerald",
+            new Item.Settings()
+                    .component(DataComponentTypes.LORE, new LoreComponent(
+                            List.of(Text.translatable(COMPRESSED_EMERALD_DESCRIPTION_TRANSLATION_KEY))
+                    ))
+                    .maxCount(64),
+                    Item::new
+            );
+
+
 
 
     public static <T extends Item> T register(String id, Item.Settings settings, Function<Item.Settings, T> factory) {

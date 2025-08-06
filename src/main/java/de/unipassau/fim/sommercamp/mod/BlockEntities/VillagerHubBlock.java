@@ -40,12 +40,14 @@ public class VillagerHubBlock extends BlockWithEntity{
 
 
         payload.VHpayload payload = new payload.VHpayload(user.getBlockPos());
-
-        for (ServerPlayerEntity player : PlayerLookup.world((ServerWorld) world)) {
+        if(!world.isClient){
+            for (ServerPlayerEntity player : PlayerLookup.world((ServerWorld) world)) {
             ServerPlayNetworking.send(player, payload);
-        }
-        return ActionResult.SUCCESS;
+            }
+
+     }   return ActionResult.SUCCESS;
     }
+
 
     @Nullable
     @Override

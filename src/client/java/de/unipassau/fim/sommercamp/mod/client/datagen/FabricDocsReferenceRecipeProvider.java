@@ -2,6 +2,7 @@ package de.unipassau.fim.sommercamp.mod.client.datagen;
 
 import java.util.concurrent.CompletableFuture;
 
+import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import net.minecraft.data.recipe.RecipeExporter;
 import net.minecraft.data.recipe.RecipeGenerator;
@@ -47,6 +48,31 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
                         .input('x', Items.GREEN_DYE)
                         .group("multi_bench")
                         .criterion(hasItem(Items.DIAMOND), conditionsFromItem(Items.DIAMOND))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, ModItems.COMPRESSED_EMERALD, 1)
+                        .pattern("eee")
+                        .pattern("eee")
+                        .pattern("eee")
+                        .input('e', Items.EMERALD_BLOCK)
+                        .group("muli_bench")
+                        .criterion(hasItem(Items.EMERALD), conditionsFromItem(Items.EMERALD))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COMPRESSED_EMERALD_BLOCK, 1)
+                        .pattern("eee")
+                        .pattern("eee")
+                        .pattern("eee")
+                        .input('e', ModItems.COMPRESSED_EMERALD)
+                        .group("muli_bench")
+                        .criterion(hasItem(Items.EMERALD_BLOCK), conditionsFromItem(Items.EMERALD_BLOCK))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.COMBAT, ModItems.EMERALD_BLADE, 1)
+                        .pattern("e")
+                        .pattern("e")
+                        .pattern("s")
+                        .input('e', ModBlocks.COMPRESSED_EMERALD_BLOCK)
+                        .input('s', Items.STICK)
+                        .group("muli_bench")
+                        .criterion(hasItem(Items.EMERALD_BLOCK), conditionsFromItem(Items.EMERALD_BLOCK))
                         .offerTo(exporter);
             }
         };

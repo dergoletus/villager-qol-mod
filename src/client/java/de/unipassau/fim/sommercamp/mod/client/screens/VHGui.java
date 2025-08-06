@@ -2,6 +2,7 @@ package de.unipassau.fim.sommercamp.mod.client.screens;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -26,7 +27,9 @@ public class VHGui extends Screen {
         }).dimensions(40, 40, 120, 20).build();
         // It's recommended to use the fixed height of 20 to prevent rendering issues with the button
         // textures.
-
+        MinecraftClient.getInstance().setScreen(
+                new VHGui(Text.empty())
+        );
         // Register the button widget.
         this.addDrawableChild(buttonWidget);
 
