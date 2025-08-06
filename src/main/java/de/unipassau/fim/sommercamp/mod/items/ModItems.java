@@ -60,6 +60,7 @@ public class ModItems {
                     .component(DataComponentTypes.LORE, new LoreComponent(
                             List.of(Text.translatable(COMPRESSED_EMERALD_DESCRIPTION_TRANSLATION_KEY))
                     ))
+                    .component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
                     .maxCount(64),
                     Item::new
             );
@@ -70,6 +71,7 @@ public class ModItems {
                     .component(DataComponentTypes.LORE, new LoreComponent(
                             List.of(Text.translatable(COMPRESSED_EMERALD_BLOCK_DESCRIPTION_TRANSLATION_KEY))
                     ))
+                    .component(DataComponentTypes.ENCHANTMENT_GLINT_OVERRIDE, true)
                     .maxCount(64),
                     Item::new
             );
