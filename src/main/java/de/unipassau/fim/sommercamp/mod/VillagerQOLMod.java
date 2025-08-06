@@ -41,7 +41,7 @@ public class VillagerQOLMod implements ModInitializer {
         ModItemGroups.init();
         ModBlocks.init();
         ModBlockEntities.init();
-        //ModEvents.init();
+        ModEvents.init();
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             restockCooldowns.replaceAll((uuid, ticks) -> Math.max(0, ticks - 1));
         });

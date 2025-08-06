@@ -30,7 +30,7 @@ public class ModEvents {
             if (entity.getType() == EntityType.VILLAGER && player.getStackInHand(hand).getItem() == ModItems.VILLAGER_REGISTER) {
                 return VillagerRegisterItem.useOnVillager(player.getStackInHand(hand), player, entity, hand);
             } else {
-                return ActionResult.FAIL;
+                return ActionResult.PASS;
             }
         });
     }
