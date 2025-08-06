@@ -3,6 +3,7 @@ package de.unipassau.fim.sommercamp.mod.BlockEntities;
 
 import com.mojang.serialization.MapCodec;
 import de.unipassau.fim.sommercamp.mod.blocks.VillagerHubBEBlock;
+import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import de.unipassau.fim.sommercamp.mod.network.payload;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -35,15 +36,19 @@ public class VillagerHubBlock extends BlockWithEntity{
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-
-
+        // If the Villager Hub Block is right-clicked with a Villager Register Item, the Hub Block shall not open a GUI
+        // but instead let the Item pick up the right click in the method VillagerRegisterItem.onUseBlock(...).
+        if (player.getStackInHand(player.getActiveHand()).getItem() == ModItems.VILLAGER_REGISTER) {
+            return ActionResult.PASS;
+        }
         payload.VHpayload payload = new payload.VHpayload(player.getBlockPos());
         if(!world.isClient && world.getBlockEntity(pos) instanceof VillagerHubBEBlock villagerHubBEBlock){
             for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
                 ServerPlayNetworking.send(user, payload);
             }
 
-     }   return ActionResult.SUCCESS;
+        }
+        return ActionResult.SUCCESS;
     }
 
 

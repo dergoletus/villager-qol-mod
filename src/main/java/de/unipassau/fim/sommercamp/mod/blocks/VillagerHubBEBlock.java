@@ -9,6 +9,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -47,4 +48,6 @@ public class VillagerHubBEBlock extends ChestBlockEntity implements ScreenHandle
     public List<String> getVillagerUUIDs(){
         return Collections.unmodifiableList(villagerUUIDs);
     }
+
+
 }

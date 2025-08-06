@@ -68,13 +68,17 @@ public class VillagerRegisterItem extends Item {
                     String villagerUUID = context.getStack().get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT);
                     if (villagerUUID.isEmpty()) {
                        context.getPlayer().sendMessage(Text.literal("Your villager register is empty! Fill it up by right-clicking a villager."), true);
-                    }
-                    if (villagerHubBlockEntity.getVillagerUUIDs().size() == villagerHubBlockEntity.villagerCapacity) {
+                    } else if (villagerHubBlockEntity.getVillagerUUIDs().size() == villagerHubBlockEntity.villagerCapacity) {
                         context.getPlayer().sendMessage(Text.literal("This Villager Hub Block is full!"), true);
+                    } else if (villagerHubBlockEntity.getVillagerUUIDs().contains(villagerUUID)) {
+                        context.getPlayer().sendMessage(Text.literal("This Villager Hub Block already contains UUID " + villagerUUID + ". " +
+                                "Your villager register has been emptied."), true);
+                        context.getStack().set(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT, "");
+                    } else {
+                        villagerHubBlockEntity.addVillager(villagerUUID);
+                        context.getPlayer().sendMessage(Text.literal("UUID " + villagerUUID + " stored in Villager Hub Block."), true);
+                        context.getStack().set(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT, "");
                     }
-                    villagerHubBlockEntity.addVillager(villagerUUID);
-                    context.getPlayer().sendMessage(Text.literal("UUID " + villagerUUID + " stored in Villager Hub Block."), true);
-                    context.getStack().set(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT, "");
                 }, () -> {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {
