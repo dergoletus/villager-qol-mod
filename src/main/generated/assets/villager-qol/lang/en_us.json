@@ -1,5 +1,9 @@
 {
+  "block.villager-qol.compressed_emerald_block": "Compressed Emerald Block",
   "block.villager-qol.villager_hub": "Villager Hub",
+  "item.villager-qol.compressed_emerald": "Compressed Emerald",
+  "item.villager-qol.compressed_emerald.description": "Emerald x81",
+  "item.villager-qol.compressed_emerald_block": "Compressed Emerald Block",
   "item.villager-qol.emerald_blade": "Emerald Blade",
   "item.villager-qol.emerald_blade.description": "The Emerald Blade forces villagers to reduce there prices",
   "item.villager-qol.resume_stick": "Resume Stick",

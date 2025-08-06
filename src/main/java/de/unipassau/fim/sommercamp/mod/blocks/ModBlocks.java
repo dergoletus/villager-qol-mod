@@ -10,6 +10,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
@@ -19,6 +20,12 @@ public class ModBlocks {
     public static final Block VILLAGER_HUB = register(
             "villager_hub",
             VillagerHubBlock::new,
+            AbstractBlock.Settings.create().sounds(BlockSoundGroup.NETHERITE),
+            true
+    );
+    public static final Block COMPRESSED_EMERALD_BLOCK = register(
+            "compressed_emerald_block",
+            Block::new,
             AbstractBlock.Settings.create(),
             true
     );

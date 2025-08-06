@@ -18,6 +18,7 @@ public class ModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.VILLAGER_HUB);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.COMPRESSED_EMERALD_BLOCK);
     }
 
     @Override
@@ -27,5 +28,7 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.RESUME_STICK, Models.HANDHELD);
         itemModelGenerator.register(ModBlocks.VILLAGER_HUB.asItem(), Models.HANDHELD);
         itemModelGenerator.register(ModItems.EMERALD_BLADE.asItem(), Models.HANDHELD);
+        itemModelGenerator.register(ModItems.COMPRESSED_EMERALD.asItem(), Models.HANDHELD);
+        itemModelGenerator.register(ModBlocks.COMPRESSED_EMERALD_BLOCK.asItem(), Models.HANDHELD);
     }
 }
