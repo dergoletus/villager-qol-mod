@@ -8,8 +8,15 @@ import de.unipassau.fim.sommercamp.mod.network.payload;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradedItem;
 import net.minecraft.village.VillagerProfession;
@@ -33,26 +40,130 @@ public class VillagerQOLMod implements ModInitializer {
         PayloadTypeRegistry.playS2C().register(payload.VHpayload.ID, payload.VHpayload.CODEC);
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
-                    new TradedItem(Items.EMERALD, 1),
-                    Optional.of(new TradedItem(Items.DIAMOND, 1)),
-                    new ItemStack(Items.ENCHANTED_BOOK, 10), 0, 999999, 100,  0)
-            );
+                new TradedItem(Items.EMERALD, 64),
+                Optional.of(new TradedItem(Items.BOOK, 1)),
+                enchantedBook(entity, Enchantments.SHARPNESS, 5),
+                0, 999999, 100, 0));
+
             factories.add((entity, random) -> new TradeOffer(
-                    new TradedItem(Items.EMERALD, 1),
-                    Optional.of(new TradedItem(Items.DIAMOND, 2)),
-                    new ItemStack(Items.ENCHANTED_BOOK, 10), 0, 999999, 100,  0)
-            );
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.EFFICIENCY, 5),
+                    0, 999999, 100, 0));
+
             factories.add((entity, random) -> new TradeOffer(
-                    new TradedItem(Items.EMERALD, 1),
-                    Optional.of(new TradedItem(Items.DIAMOND, 3)),
-                    new ItemStack(Items.ENCHANTED_BOOK, 10), 0, 999999, 100,  0)
-            );
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.PROTECTION, 4),
+                    0, 999999, 100, 0));
+
             factories.add((entity, random) -> new TradeOffer(
-                    new TradedItem(Items.EMERALD, 1),
-                    Optional.of(new TradedItem(Items.DIAMOND, 4)),
-                    new ItemStack(Items.ENCHANTED_BOOK, 10), 0, 999999, 100,  0)
-            );
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.AQUA_AFFINITY, 1),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.DEPTH_STRIDER, 3),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.FEATHER_FALLING, 4),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.RESPIRATION, 3),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.BREACH, 4),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.DENSITY, 5),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.FIRE_ASPECT, 2),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.LOOTING, 3),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.SMITE, 5),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.SWEEPING_EDGE, 3),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.FLAME, 1),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.INFINITY, 1),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.POWER, 5),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.PUNCH, 2),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.FORTUNE, 3),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.SILK_TOUCH, 1),
+                    0, 999999, 100, 0));
+
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.MENDING, 1),
+                    0, 999999, 100, 0));
         });
+    }
+
+    public static ItemStack enchantedBook(Entity entity, RegistryKey<Enchantment> registryKey, int level) {
+        var entry = entity.getWorld().getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getEntry(registryKey.getValue()).orElseThrow();
+        return EnchantmentHelper.getEnchantedBookWith(new EnchantmentLevelEntry(entry, level));
     }
 
 }

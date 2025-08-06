@@ -20,6 +20,7 @@ public class ModItemGroups {
                 entries.add(new ItemStack(ModItems.STOP_STICK));
                 entries.add(new ItemStack(ModItems.RESUME_STICK));
                 entries.add(new ItemStack(ModItems.VILLAGER_REGISTER));
+                entries.add(new ItemStack(ModItems.EMERALD_BLADE));
             }))
             .build();
 

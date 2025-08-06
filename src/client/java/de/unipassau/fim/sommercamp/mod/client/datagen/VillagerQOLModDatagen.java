@@ -11,6 +11,7 @@ public class VillagerQOLModDatagen implements DataGeneratorEntrypoint {
 
         pack.addProvider(TranslationGenerator::new);
         pack.addProvider(ModelGenerator::new);
+        pack.addProvider(FabricDocsReferenceRecipeProvider::new);
     }
 
 }
