@@ -74,6 +74,18 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
                         .group("muli_bench")
                         .criterion(hasItem(Items.EMERALD_BLOCK), conditionsFromItem(Items.EMERALD_BLOCK))
                         .offerTo(exporter);
+
+                // Rezept für Villager Register
+                createShaped(RecipeCategory.MISC, ModItems.VILLAGER_REGISTER, 1)
+                        .pattern("cdc")
+                        .pattern("did")
+                        .pattern("cdc")
+                        .input('c', Items.CHEST)
+                        .input('d', Items.DIAMOND)
+                        .input('i', Items.ITEM_FRAME)
+                        .group("multi_bench")
+                        .criterion(hasItem(Items.DIAMOND), conditionsFromItem(Items.DIAMOND))
+                        .offerTo(exporter);
             }
         };
     }

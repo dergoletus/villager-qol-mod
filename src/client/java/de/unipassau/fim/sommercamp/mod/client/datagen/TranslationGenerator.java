@@ -27,9 +27,8 @@ public class TranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.RESUME_STICK, "Resume Stick");
         translationBuilder.add(ModItems.RESUME_STICK_DESCRIPTION_TRANSLATION_KEY, "Unfreezes all Villagers previously frozen with the Stop Stick within 16 blocks.");
         translationBuilder.add(ModItems.VILLAGER_REGISTER, "Villager Register");
-        translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(0), "Store references to Villagers in here by right-clicking on a villager.");
+        translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(0), "Store a reference to a villager in here by right-clicking on a villager.");
         translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(1), "Right click again on a Villager Hub Block to connect villagers to the Hub Block.");
-        translationBuilder.add(VillagerRegisterItem.VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(2), "Can store up to 3 Villagers.");
         translationBuilder.add(ModItems.EMERALD_BLADE, "Emerald Blade");
         translationBuilder.add(ModItems.EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY, "The Emerald Blade forces villagers to reduce there prices");
         translationBuilder.add(ModItems.COMPRESSED_EMERALD, "Compressed Emerald");

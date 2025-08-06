@@ -12,8 +12,7 @@
   "item.villager-qol.stop_stick.description": "Freezes all Villagers within 16 Blocks.",
   "item.villager-qol.villager_hub": "Villager Hub",
   "item.villager-qol.villager_register": "Villager Register",
-  "item.villager-qol.villager_register.description.0": "Store references to Villagers in here by right-clicking on a villager.",
+  "item.villager-qol.villager_register.description.0": "Store a reference to a villager in here by right-clicking on a villager.",
   "item.villager-qol.villager_register.description.1": "Right click again on a Villager Hub Block to connect villagers to the Hub Block.",
-  "item.villager-qol.villager_register.description.2": "Can store up to 3 Villagers.",
   "itemGroup.villager_qol_group": "Villager QOL"
 }

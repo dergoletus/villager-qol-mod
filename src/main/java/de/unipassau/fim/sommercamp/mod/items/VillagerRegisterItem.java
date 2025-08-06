@@ -1,8 +1,12 @@
 package de.unipassau.fim.sommercamp.mod.items;
 
 import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
+import de.unipassau.fim.sommercamp.mod.components.ModComponents;
 import net.minecraft.component.type.LoreComponent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,10 +14,10 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class VillagerRegisterItem extends Item {
 
@@ -28,47 +32,43 @@ public class VillagerRegisterItem extends Item {
             VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.add("item.villager-qol.villager_register.description." + i);
         }
         return new LoreComponent(List.of(Text.translatable(VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(0)),
-            Text.translatable(VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(1)),
-            Text.translatable(VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(2))));
+            Text.translatable(VILLAGER_REGISTER_DESCRIPTION_TRANSLATION_KEYS.get(1))));
+    }
+
+    public static ActionResult useOnVillager(ItemStack stack, PlayerEntity player, Entity villager, Hand hand) {
+        String villagerUUID = villager.getUuidAsString();
+
+        System.out.println(stack.get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT));
+
+        // If the Villager Register is already full, a UUID cannot be added.
+        if (!stack.get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT).isEmpty()) {
+            player.sendMessage(Text.literal("Your Villager Register is full!"), true);
+            return ActionResult.FAIL;
+            // Otherwise, the entities UUID is added into the register.
+        } else {
+            stack.set(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT, villagerUUID);
+            player.sendMessage(Text.literal("UUID " + villagerUUID + " stored."), true);
+            return ActionResult.SUCCESS;
+        }
     }
 
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand) {
-        ArrayList<String> villagerUUIDs = new ArrayList<>();
-        villagerUUIDs.add(stack.get(ModComponents.VILLAGER_1_UUID));
-        villagerUUIDs.add(stack.get(ModComponents.VILLAGER_2_UUID));
-        villagerUUIDs.add(stack.get(ModComponents.VILLAGER_3_UUID));
-
-        int nextFreeElement = -1;
-        for (int i = 0; i < villagerUUIDs.size(); i++) {
-            if (Objects.equals(villagerUUIDs.get(i), "")) {
-                nextFreeElement = i + 1;
-            }
-        }
-
-        String villagerUUID = entity.getUuidAsString();
-
-        // If none of the villagerUUIDs are empty, no free space is available within the Villager Register.
-        if (nextFreeElement == -1) {
-            player.sendMessage(Text.literal("Your Villager Register is full!"), true);
+        if (entity.getType() != EntityType.VILLAGER) {
+            player.sendMessage(Text.literal("This item can only be used on villagers"), true);
             return ActionResult.FAIL;
-        // Otherwise, the entities UUID is added into whatever slot is free, simulating a queue system.
-        } else if (nextFreeElement == 1) {
-            stack.set(ModComponents.VILLAGER_1_UUID, villagerUUID);
-        } else if (nextFreeElement == 2) {
-            stack.set(ModComponents.VILLAGER_2_UUID, villagerUUID);
-        } else if (nextFreeElement == 3) {
-            stack.set(ModComponents.VILLAGER_3_UUID, villagerUUID);
         }
-
-        return ActionResult.SUCCESS;
+        return VillagerRegisterItem.useOnVillager(stack, player, entity, hand);
     }
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         context.getWorld().getBlockEntity(context.getBlockPos(), ModBlockEntities.VILLAGER_HUB_BE_BLOCK_BLOCK_ENTITY_TYPE)
                 .ifPresentOrElse((blockEntity) -> {
-                    // Get UUID from UUID List
+                    String villagerUUID = context.getStack().get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT);
+                    if (villagerUUID.isEmpty()) {
+                       context.getPlayer().sendMessage(Text.literal("Your villager register is empty! Fill it up by right-clicking a villager."), true);
+                    }
 
                     // TODO: Villager UUID dem Villager Hub Block übergeben
                 }, () -> {
