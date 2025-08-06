@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.ItemModelGenerator;
 import net.minecraft.client.data.Models;
+import net.minecraft.item.BlockItem;
 
 public class ModelGenerator extends FabricModelProvider {
 
@@ -29,6 +30,5 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.EMERALD_BLADE.asItem(), Models.HANDHELD);
         itemModelGenerator.register(ModItems.COMPRESSED_EMERALD.asItem(), Models.HANDHELD);
         itemModelGenerator.register(ModBlocks.COMPRESSED_EMERALD_BLOCK.asItem(), Models.HANDHELD);
-        itemModelGenerator.register(ModBlocks.VILLAGER_HUB.asItem(), Models.HANDHELD);
     }
 }

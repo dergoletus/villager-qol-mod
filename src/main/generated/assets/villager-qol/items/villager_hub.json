@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "villager-qol:block/villager_hub"
+    "model": "villager-qol:item/villager_hub"
   }
 }
