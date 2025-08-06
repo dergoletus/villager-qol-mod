@@ -38,7 +38,7 @@ public class VillagerQOLMod implements ModInitializer {
         ModItemGroups.init();
         ModBlocks.init();
         ModBlockEntities.init();
-        ModEvents.init();
+        //ModEvents.init();
         PayloadTypeRegistry.playS2C().register(payload.VHpayload.ID, payload.VHpayload.CODEC);
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
