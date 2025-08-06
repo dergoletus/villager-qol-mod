@@ -42,6 +42,15 @@ public class ModItems {
                     .maxCount(1),
             VillagerRegisterItem::new);
 
+    public static final String EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.emerald_blade.description";
+    public static final EmeraldBladeItem EMERALD_BLADE = register("emerald_blade",
+            new Item.Settings()
+                    .component(DataComponentTypes.LORE, new LoreComponent(
+                            List.of(Text.translatable(EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY))))
+                    .maxCount(1),
+                    EmeraldBladeItem::new);
+
+
 
     public static <T extends Item> T register(String id, Item.Settings settings, Function<Item.Settings, T> factory) {
         Identifier identifier = Identifier.of(VillagerQOLMod.MOD_ID, id);

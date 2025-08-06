@@ -26,5 +26,6 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.VILLAGER_REGISTER, Models.HANDHELD);
         itemModelGenerator.register(ModItems.RESUME_STICK, Models.HANDHELD);
         itemModelGenerator.register(ModBlocks.VILLAGER_HUB.asItem(), Models.HANDHELD);
+        itemModelGenerator.register(ModItems.EMERALD_BLADE.asItem(), Models.HANDHELD);
     }
 }
