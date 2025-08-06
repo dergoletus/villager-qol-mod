@@ -23,13 +23,6 @@ public class ModBlocks {
             AbstractBlock.Settings.create().sounds(BlockSoundGroup.NETHERITE),
             true
     );
-    public static final Block COMPRESSED_EMERALD_BLOCK = register(
-            "compressed_emerald_block",
-            Block::new,
-            AbstractBlock.Settings.create(),
-            true
-    );
-
 
     private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {
         // Create a registry key for the block
@@ -58,8 +51,6 @@ public class ModBlocks {
     private static RegistryKey<Item> keyOfItem(String name) {
             return RegistryKey.of(RegistryKeys.ITEM, Identifier.of(VillagerQOLMod.MOD_ID, name));
     }
-
-
 
     public static void init() {
         VillagerQOLMod.LOGGER.info("Adding Blocks");

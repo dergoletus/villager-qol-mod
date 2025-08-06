@@ -6,8 +6,12 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.ItemModelGenerator;
+import net.minecraft.client.data.Model;
 import net.minecraft.client.data.Models;
 import net.minecraft.item.BlockItem;
+import net.minecraft.util.Identifier;
+
+import java.util.Optional;
 
 public class ModelGenerator extends FabricModelProvider {
 
@@ -18,7 +22,6 @@ public class ModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.VILLAGER_HUB);
-        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.COMPRESSED_EMERALD_BLOCK);
     }
 
     @Override
@@ -26,9 +29,9 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.STOP_STICK, Models.HANDHELD);
         itemModelGenerator.register(ModItems.VILLAGER_REGISTER, Models.HANDHELD);
         itemModelGenerator.register(ModItems.RESUME_STICK, Models.HANDHELD);
-        itemModelGenerator.register(ModBlocks.VILLAGER_HUB.asItem(), Models.HANDHELD);
-        itemModelGenerator.register(ModItems.EMERALD_BLADE.asItem(), Models.HANDHELD);
-        itemModelGenerator.register(ModItems.COMPRESSED_EMERALD.asItem(), Models.HANDHELD);
-        itemModelGenerator.register(ModBlocks.COMPRESSED_EMERALD_BLOCK.asItem(), Models.HANDHELD);
+        itemModelGenerator.register(ModItems.EMERALD_BLADE, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.COMPRESSED_EMERALD, Models.GENERATED);
+        itemModelGenerator.register(ModItems.COMPRESSED_EMERALD_BLOCK,
+                new Model(Optional.of(Identifier.of("minecraft", "block/emerald_block")), Optional.empty()));
     }
 }

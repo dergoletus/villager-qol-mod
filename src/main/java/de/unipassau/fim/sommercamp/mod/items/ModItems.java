@@ -33,6 +33,7 @@ public class ModItems {
                     .maxCount(1),
             ResumeStickItem::new);
 
+    // The Villager Register class stores its own translation keys
     public static final VillagerRegisterItem VILLAGER_REGISTER = register("villager_register",
             new Item.Settings()
                     .component(DataComponentTypes.LORE, VillagerRegisterItem.createLoreComponent())
@@ -58,7 +59,15 @@ public class ModItems {
                     Item::new
             );
 
-
+    public static final String COMPRESSED_EMERALD_BLOCK_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.compressed_emerald_block.description";
+    public static final Item COMPRESSED_EMERALD_BLOCK = register("compressed_emerald_block",
+            new Item.Settings()
+                    .component(DataComponentTypes.LORE, new LoreComponent(
+                            List.of(Text.translatable(COMPRESSED_EMERALD_BLOCK_DESCRIPTION_TRANSLATION_KEY))
+                    ))
+                    .maxCount(64),
+                    Item::new
+            );
 
 
     public static <T extends Item> T register(String id, Item.Settings settings, Function<Item.Settings, T> factory) {

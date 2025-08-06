@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "villager-qol:item/compressed_emerald_block"
-  }
+  "parent": "minecraft:block/emerald_block"
 }

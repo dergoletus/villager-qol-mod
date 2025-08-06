@@ -57,7 +57,7 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
                         .group("muli_bench")
                         .criterion(hasItem(Items.EMERALD), conditionsFromItem(Items.EMERALD))
                         .offerTo(exporter);
-                createShaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.COMPRESSED_EMERALD_BLOCK, 1)
+                createShaped(RecipeCategory.BUILDING_BLOCKS, ModItems.COMPRESSED_EMERALD_BLOCK, 1)
                         .pattern("eee")
                         .pattern("eee")
                         .pattern("eee")
@@ -69,7 +69,7 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
                         .pattern("e")
                         .pattern("e")
                         .pattern("s")
-                        .input('e', ModBlocks.COMPRESSED_EMERALD_BLOCK)
+                        .input('e', ModItems.COMPRESSED_EMERALD_BLOCK)
                         .input('s', Items.STICK)
                         .group("muli_bench")
                         .criterion(hasItem(Items.EMERALD_BLOCK), conditionsFromItem(Items.EMERALD_BLOCK))

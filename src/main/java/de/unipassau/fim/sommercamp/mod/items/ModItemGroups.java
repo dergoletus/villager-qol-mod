@@ -23,7 +23,8 @@ public class ModItemGroups {
                 entries.add(new ItemStack(ModItems.VILLAGER_REGISTER));
                 entries.add(new ItemStack(ModItems.EMERALD_BLADE));
                 entries.add(new ItemStack(ModItems.COMPRESSED_EMERALD));
-                entries.add(new ItemStack(ModBlocks.COMPRESSED_EMERALD_BLOCK));
+                entries.add(new ItemStack(ModItems.COMPRESSED_EMERALD_BLOCK));
+                entries.add(new ItemStack(ModBlocks.VILLAGER_HUB));
             }))
             .build();
 
