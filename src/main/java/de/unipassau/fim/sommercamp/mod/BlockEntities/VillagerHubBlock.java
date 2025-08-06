@@ -36,13 +36,13 @@ public class VillagerHubBlock extends BlockWithEntity{
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity user, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
 
 
-        payload.VHpayload payload = new payload.VHpayload(user.getBlockPos());
-        if(!world.isClient){
-            for (ServerPlayerEntity player : PlayerLookup.world((ServerWorld) world)) {
-            ServerPlayNetworking.send(player, payload);
+        payload.VHpayload payload = new payload.VHpayload(player.getBlockPos());
+        if(!world.isClient && world.getBlockEntity(pos) instanceof VillagerHubBEBlock villagerHubBEBlock){
+            for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
+                ServerPlayNetworking.send(user, payload);
             }
 
      }   return ActionResult.SUCCESS;

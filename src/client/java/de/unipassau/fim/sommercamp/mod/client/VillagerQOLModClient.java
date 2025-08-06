@@ -19,13 +19,11 @@ public class VillagerQOLModClient implements ClientModInitializer {
                 return;
             }
 
-            if (!world.isClient) {
                 System.out.println("used");
                 MinecraftClient.getInstance().setScreen(
                         new VHGui(Text.empty())
                 );
                 // Your custom logic here
-            }
         });
     }
 
