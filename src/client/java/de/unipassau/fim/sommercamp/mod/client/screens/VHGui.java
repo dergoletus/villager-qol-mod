@@ -8,6 +8,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
@@ -50,7 +52,7 @@ public class VHGui extends Screen {
         for(int i = 0; i < villagerInfoList.size(); i++) {
             Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
 
-            int x = (int) (realscreenwidth * 0.52);
+            int x = (int) (realscreenwidth * 0.54);
             int y = startY + i * spacing;
 
             // Der Trade-Knopf sollte nur dann hinzugefügt werden, wenn der Villager eine Arbeit hat.
@@ -92,9 +94,45 @@ public class VHGui extends Screen {
             int y = startY + 25 + i * spacing;
             String displayText = villagerInfo.profession().equals("None") ? "Jobless Villager" : villagerInfo.level() + " " + villagerInfo.profession();
             context.drawText(this.textRenderer, displayText, x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+
+            // Neben dem Text werden noch Icons angezeigt, die einen gewissen Charme in die Sache bringen.
+            if (!villagerInfo.profession().equals("None")) {
+                context.drawItem(getWorkstationIcon(villagerInfo.profession()), x + 140, y - 23);
+                context.drawItem(getLevelIcon(villagerInfo.level()), x + 160, y - 23);
+            }
         }
         context.drawText(this.textRenderer, "Villager Hub", realscreenwidth/2 -35, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
         context.drawText(this.textRenderer, "Store villagers in this block to trade with them easily!", 30, 80 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
         context.drawText(this.textRenderer, "Villagers that are dead or out of render distance are automatically removed from the block.", 30, 95 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+    }
+
+    public ItemStack getWorkstationIcon(String profession) {
+        return switch (profession) {
+            case "Armorer" -> new ItemStack(Items.BLAST_FURNACE);
+            case "Butcher" -> new ItemStack(Items.SMOKER);
+            case "Cartographer" -> new ItemStack(Items.CARTOGRAPHY_TABLE);
+            case "Cleric" -> new ItemStack(Items.BREWING_STAND);
+            case "Farmer" -> new ItemStack(Items.COMPOSTER);
+            case "Fisherman" -> new ItemStack(Items.BARREL);
+            case "Fletcher" -> new ItemStack(Items.FLETCHING_TABLE);
+            case "Leatherworker" -> new ItemStack(Items.CAULDRON);
+            case "Librarian" -> new ItemStack(Items.LECTERN);
+            case "Mason" -> new ItemStack(Items.STONECUTTER);
+            case "Shepherd" -> new ItemStack(Items.LOOM);
+            case "Toolsmith" -> new ItemStack(Items.SMITHING_TABLE);
+            case "Weaponsmith" -> new ItemStack(Items.GRINDSTONE);
+            default -> ItemStack.EMPTY;
+        };
+    }
+
+    private ItemStack getLevelIcon(String level) {
+        return switch (level) {
+            case "Novice" -> new ItemStack(Items.CLAY_BALL);
+            case "Apprentice" -> new ItemStack(Items.BRICK);
+            case "Journeyman" -> new ItemStack(Items.GOLD_INGOT);
+            case "Expert" -> new ItemStack(Items.EMERALD);
+            case "Master" -> new ItemStack(Items.DIAMOND);
+            default -> ItemStack.EMPTY;
+        };
     }
 }
