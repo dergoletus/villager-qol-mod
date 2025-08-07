@@ -20,7 +20,6 @@ public class VillagerQOLModClient implements ClientModInitializer {
             }
 
             System.out.println("used");
-            System.out.println(payload.villagerInfos().get(0).profession());
             MinecraftClient.getInstance().setScreen(
                     new VHGui(Text.empty())
             );

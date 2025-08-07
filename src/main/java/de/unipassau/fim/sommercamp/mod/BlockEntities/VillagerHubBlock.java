@@ -48,13 +48,19 @@ public class VillagerHubBlock extends BlockWithEntity{
         if(!world.isClient) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof VillagerHubBlockEntity villagerHubBlockEntity) {
-                for (String villagerUUID : villagerHubBlockEntity.getVillagerUUIDs()) {
-                    VillagerEntity villager = VillagerHubBlockEntity.findVillagerByUUID(world, villagerUUID);
-                    String profession = villager.getVillagerData().profession().getIdAsString();
-                    villagerInfos.add(new Payload.VillagerInfo(villagerUUID, profession));
+                List<VillagerEntity> villagers = VillagerHubBlockEntity.findVillagersByUUID(world, villagerHubBlockEntity.getVillagerUUIDs());
+                for (VillagerEntity villager : villagers) {
+                    if (villager != null) {
+                        villagerInfos.add(new Payload.VillagerInfo(
+                                villager.getUuidAsString(),
+                                villager.getVillagerData().profession().getIdAsString()));
+                    } else {
+                        villagerInfos.add(new Payload.VillagerInfo(null, null));
+                    }
                 }
             }
         }
+
         Payload.VHPayload payload = new Payload.VHPayload(player.getBlockPos(), villagerInfos);
         if(!world.isClient && world.getBlockEntity(pos) instanceof VillagerHubBlockEntity villagerHubBlockEntity){
             for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
