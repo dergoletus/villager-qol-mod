@@ -3,11 +3,13 @@ package de.unipassau.fim.sommercamp.mod.client.screens;
 import de.unipassau.fim.sommercamp.mod.network.Payload;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 
@@ -24,11 +26,14 @@ public class VHGui extends Screen {
     int realscreenheight = (int) (screenheight / transformation_ratio);
 
 
-    private static List<Payload.VillagerInfo> villagerInfoList;
+    private final List<Payload.VillagerInfo> villagerInfoList;
 
-    public VHGui(Text title, List<Payload.VillagerInfo> villagerInfos) {
+    public BlockPos pos;
+
+    public VHGui(Text title, List<Payload.VillagerInfo> villagerInfos, BlockPos pos) {
         super(title);
-        villagerInfoList = villagerInfos;
+        this.villagerInfoList = villagerInfos;
+        this.pos = pos;
     }
 
     @Override
@@ -50,11 +55,17 @@ public class VHGui extends Screen {
             int y = startY + i * spacing;
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"),(btn) -> {
-
+                Payload.OpenTradeMenuPayload openTradeMenuPayload = new Payload.OpenTradeMenuPayload(pos, villagerInfo.UUID());
+                MinecraftClient.getInstance().setScreen(null);
+                ClientPlayNetworking.send(openTradeMenuPayload);
             }).dimensions(x,y,buttonWidth,buttonHeight).build());
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Remove"),(btn) -> {
-
+                Payload.RemoveVillagerPayload removeVillagerPayload = new Payload.RemoveVillagerPayload(pos, villagerInfo.UUID());
+                ClientPlayNetworking.send(removeVillagerPayload);
+                // Remove-Knopf schließt die GUI und der Server schickt ein neues Packet, dass die GUI erneut öffnet
+                // So kann die GUI aktualisiert werden
+                MinecraftClient.getInstance().setScreen(null);
             }).dimensions(x + 80,y,buttonWidth,buttonHeight).build());
         }
 

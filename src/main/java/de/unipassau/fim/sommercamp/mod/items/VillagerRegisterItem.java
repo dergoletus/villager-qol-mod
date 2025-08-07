@@ -6,7 +6,6 @@ import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,7 +13,6 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +61,7 @@ public class VillagerRegisterItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        context.getWorld().getBlockEntity(context.getBlockPos(), ModBlockEntities.VILLAGER_HUB_BE_BLOCK_BLOCK_ENTITY_TYPE)
+        context.getWorld().getBlockEntity(context.getBlockPos(), ModBlockEntities.VILLAGER_HUB_BLOCK_ENTITY_TYPE)
                 .ifPresentOrElse((villagerHubBlockEntity) -> {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {

@@ -38,13 +38,8 @@ public class VillagerQOLModClient implements ClientModInitializer {
             }
 
             MinecraftClient.getInstance().setScreen(
-                    new VHGui(Text.literal("Villager Hub"), readableVillagerInfos)
+                    new VHGui(Text.literal("Villager Hub"), readableVillagerInfos, payload.pos())
             );
-            // Your custom logic here
-
-            // Send a packet back to the server
-            Payload.RemoveVillagerPayload removeVillagerPayload = new Payload.RemoveVillagerPayload("Test");
-            ClientPlayNetworking.send(removeVillagerPayload);
         });
     }
 
@@ -52,5 +47,4 @@ public class VillagerQOLModClient implements ClientModInitializer {
         String professionNameLowerCase = profession.split(":")[1];
         return professionNameLowerCase.substring(0, 1).toUpperCase() + professionNameLowerCase.substring(1);
     }
-
 }

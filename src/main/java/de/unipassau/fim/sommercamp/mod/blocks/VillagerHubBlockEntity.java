@@ -2,40 +2,24 @@ package de.unipassau.fim.sommercamp.mod.blocks;
 
 import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class VillagerHubBlockEntity extends ChestBlockEntity implements ScreenHandlerFactory {
+public class VillagerHubBlockEntity extends BlockEntity {
 
     public final int villagerCapacity = 3;
     private final List<String> villagerUUIDs = new ArrayList<>(villagerCapacity);
 
     public VillagerHubBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.VILLAGER_HUB_BE_BLOCK_BLOCK_ENTITY_TYPE, pos, state);
-    }
-
-    @Nullable
-    @Override
-    public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return this.checkUnlocked(playerEntity) ? this.createScreenHandler(i, playerInventory) : null;
-    }
-
-    public Text getDisplayName() {
-        return Text.literal("Villager Hub");
+        super(ModBlockEntities.VILLAGER_HUB_BLOCK_ENTITY_TYPE, pos, state);
     }
 
     public void addVillager(String uuid) {
@@ -58,7 +42,7 @@ public class VillagerHubBlockEntity extends ChestBlockEntity implements ScreenHa
             List<? extends VillagerEntity> villagerList = serverWorld.getEntitiesByType(
                     EntityType.VILLAGER,
                     (villager) -> villager.getUuidAsString().equals(UUID));
-            return villagerList.isEmpty() ? null : villagerList.get(0);
+            return villagerList.isEmpty() ? null : villagerList.getFirst();
         } else {
             System.out.println("Non-server world given.");
             return null;

@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 public class ModBlockEntities {
 
-    public static final BlockEntityType<VillagerHubBlockEntity> VILLAGER_HUB_BE_BLOCK_BLOCK_ENTITY_TYPE =
+    public static final BlockEntityType<VillagerHubBlockEntity> VILLAGER_HUB_BLOCK_ENTITY_TYPE =
             register("villager_hub", VillagerHubBlockEntity::new, ModBlocks.VILLAGER_HUB);
 
     private static <T extends BlockEntity> BlockEntityType<T> register(
