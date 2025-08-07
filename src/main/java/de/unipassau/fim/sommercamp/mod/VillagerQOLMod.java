@@ -1,7 +1,9 @@
 package de.unipassau.fim.sommercamp.mod;
 
 import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
+import de.unipassau.fim.sommercamp.mod.BlockEntities.VillagerHubBlock;
 import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
+import de.unipassau.fim.sommercamp.mod.blocks.VillagerHubBlockEntity;
 import de.unipassau.fim.sommercamp.mod.events.ModEvents;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
@@ -12,15 +14,25 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradedItem;
 import net.minecraft.village.VillagerProfession;
@@ -47,25 +59,45 @@ public class VillagerQOLMod implements ModInitializer {
         ModEvents.init();
 
         PayloadTypeRegistry.playC2S().register(Payload.RemoveVillagerPayload.ID, Payload.RemoveVillagerPayload.CODEC);
+        PayloadTypeRegistry.playC2S().register(Payload.OpenTradeMenuPayload.ID, Payload.OpenTradeMenuPayload.CODEC);
         PayloadTypeRegistry.playS2C().register(Payload.VHPayload.ID, Payload.VHPayload.CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(Payload.RemoveVillagerPayload.ID, (payload, context) -> {
-           context.player().getServer().execute(() -> {
-              System.out.println("Client requested remove for villager " + payload.villagerUUID());
-           });
+            ServerPlayerEntity serverPlayer = context.player();
+            ServerWorld world = serverPlayer.getServerWorld();
+
+            BlockEntity blockEntity = world.getBlockEntity(payload.pos());
+            if (blockEntity instanceof VillagerHubBlockEntity villagerHubBlockEntity) {
+                villagerHubBlockEntity.removeVillager(payload.villagerUUID());
+                Block block = world.getBlockState(payload.pos()).getBlock();
+                if (block instanceof VillagerHubBlock villagerHubBlock) {
+                    villagerHubBlock.sendVillagerDataToClient(world, serverPlayer, villagerHubBlockEntity);
+                }
+            }
+        });
+
+        ServerPlayNetworking.registerGlobalReceiver(Payload.OpenTradeMenuPayload.ID, (payload, context) -> {
+            ServerPlayerEntity serverPlayer = context.player();
+            ServerWorld serverWorld = serverPlayer.getServerWorld();
+            VillagerEntity villager = VillagerHubBlockEntity.findVillagerByUUID(serverWorld, payload.villagerUUID());
+            // context.player().openHandledScreen();
         });
 
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             restockCooldowns.replaceAll((uuid, ticks) -> Math.max(0, ticks - 1));
         });
-
         ServerTickEvents.END_SERVER_TICK.register(server -> CooldownHandler.tick());
+
+        registerVillagerTrades();
+    }
+
+    public static void registerVillagerTrades() {
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
-                new TradedItem(Items.EMERALD, 64),
-                Optional.of(new TradedItem(Items.BOOK, 1)),
-                enchantedBook(entity, Enchantments.SHARPNESS, 5),
-                0, 999999, 100, 0));
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.SHARPNESS, 5),
+                    0, 999999, 100, 0));
 
             factories.add((entity, random) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),

@@ -99,9 +99,9 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
 
                 //Recipe for Emerald Mace
                 createShaped(RecipeCategory.MISC, ModItems.EMERALD_MACE, 1)
-                        .pattern("den")
-                        .pattern("eme")
-                        .pattern("nbd")
+                        .pattern("nee")
+                        .pattern("dme")
+                        .pattern("bdn")
                         .input('e', ModItems.COMPRESSED_EMERALD_BLOCK)
                         .input('m', Items.MACE)
                         .input('b', ModItems.EMERALD_BLADE)
