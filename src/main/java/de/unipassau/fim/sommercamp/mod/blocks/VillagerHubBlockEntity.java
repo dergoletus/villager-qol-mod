@@ -1,12 +1,18 @@
 package de.unipassau.fim.sommercamp.mod.blocks;
 
 import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
+import de.unipassau.fim.sommercamp.mod.network.Payload;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.server.world.ServerWorld;
@@ -22,6 +28,7 @@ import java.util.List;
 public class VillagerHubBlockEntity extends ChestBlockEntity implements ScreenHandlerFactory {
 
     public final int villagerCapacity = 3;
+    private final static List<Payload.VillagerInfo> villagerInfoList = new ArrayList<>();
     private final List<String> villagerUUIDs = new ArrayList<>(villagerCapacity);
 
     public VillagerHubBlockEntity(BlockPos pos, BlockState state) {
@@ -72,5 +79,33 @@ public class VillagerHubBlockEntity extends ChestBlockEntity implements ScreenHa
             villagerEntities.add(villagerEntity);
         }
         return villagerEntities;
+    }
+
+    @Override
+    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.writeNbt(nbt, registryLookup);
+        System.out.println("write nbt " + villagerUUIDs.size());
+        for(String villagerInfo : villagerUUIDs){
+            //NbtCompound compound = new NbtCompound();
+            NbtList nbtList = new NbtList();
+            nbtList.add(NbtString.of(villagerInfo));
+            nbt.put("uuids", nbtList);
+        }
+    }
+
+    @Override
+    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
+        super.readNbt(nbt, registryLookup);
+
+        NbtList list = nbt.getListOrEmpty("uuids");
+        for(NbtElement villagerInfo : list){
+            villagerUUIDs.add(villagerInfo.toString());
+        }
+
+
+    }
+    @Override
+    public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
+        return createNbt(registryLookup);
     }
 }

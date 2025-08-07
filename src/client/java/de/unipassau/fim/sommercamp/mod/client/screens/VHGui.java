@@ -70,6 +70,6 @@ public class VHGui extends Screen {
             int y = startY + i * spacing;
             context.drawText(this.textRenderer, villagerInfo.profession() + ", " + villagerInfo.level(), x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
         }
-        context.drawText(this.textRenderer, "Villager Hub", 200, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+        context.drawText(this.textRenderer, "Villager Hub", 220, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
     }
 }
