@@ -46,13 +46,16 @@ public class VHGui extends Screen {
             int y = startY + i * spacing;
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"),(btn) -> {
-
+                Payload.OpenTradeMenuPayload openTradeMenuPayload = new Payload.OpenTradeMenuPayload(pos, villagerInfo.UUID());
+                ClientPlayNetworking.send(openTradeMenuPayload);
+                MinecraftClient.getInstance().setScreen(null);
             }).dimensions(x,y,buttonWidth,buttonHeight).build());
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Remove"),(btn) -> {
                 Payload.RemoveVillagerPayload removeVillagerPayload = new Payload.RemoveVillagerPayload(pos, villagerInfo.UUID());
                 ClientPlayNetworking.send(removeVillagerPayload);
-                // Remove-Knopf schließt die GUI und öffnet sie wieder
+                // Remove-Knopf schließt die GUI und der Server schickt ein neues Packet, dass die GUI erneut öffnet
+                // So kann die GUI aktualisiert werden
                 MinecraftClient.getInstance().setScreen(null);
             }).dimensions(x + 80,y,buttonWidth,buttonHeight).build());
         }

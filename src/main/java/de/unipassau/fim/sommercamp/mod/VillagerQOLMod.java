@@ -22,6 +22,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
@@ -75,17 +76,28 @@ public class VillagerQOLMod implements ModInitializer {
             }
         });
 
+        ServerPlayNetworking.registerGlobalReceiver(Payload.OpenTradeMenuPayload.ID, (payload, context) -> {
+            ServerPlayerEntity serverPlayer = context.player();
+            ServerWorld serverWorld = serverPlayer.getServerWorld();
+            VillagerEntity villager = VillagerHubBlockEntity.findVillagerByUUID(serverWorld, payload.villagerUUID());
+            // context.player().openHandledScreen();
+        });
+
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             restockCooldowns.replaceAll((uuid, ticks) -> Math.max(0, ticks - 1));
         });
-
         ServerTickEvents.END_SERVER_TICK.register(server -> CooldownHandler.tick());
+
+        registerVillagerTrades();
+    }
+
+    public static void registerVillagerTrades() {
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
-                new TradedItem(Items.EMERALD, 64),
-                Optional.of(new TradedItem(Items.BOOK, 1)),
-                enchantedBook(entity, Enchantments.SHARPNESS, 5),
-                0, 999999, 100, 0));
+                    new TradedItem(Items.EMERALD, 64),
+                    Optional.of(new TradedItem(Items.BOOK, 1)),
+                    enchantedBook(entity, Enchantments.SHARPNESS, 5),
+                    0, 999999, 100, 0));
 
             factories.add((entity, random) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
