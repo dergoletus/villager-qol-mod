@@ -8,8 +8,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 
 public class VillagerQOLModClient implements ClientModInitializer {
 
@@ -25,19 +27,21 @@ public class VillagerQOLModClient implements ClientModInitializer {
             }
 
             System.out.println("used");
+            // Convert payload villagerInfos to villagerInfos with readable data
+            List<Payload.VillagerInfo> readableVillagerInfos = new ArrayList<>();
+            for (Payload.VillagerInfo villagerInfo : payload.villagerInfos()) {
+                readableVillagerInfos.add(new Payload.VillagerInfo(
+                        villagerInfo.UUID(),
+                        getProfessionName(villagerInfo.profession()),
+                        villagerInfo.level()
+                ));
+            }
+
             MinecraftClient.getInstance().setScreen(
-                    new VHGui(Text.empty())
+                    new VHGui(Text.literal("Villager Hub"), readableVillagerInfos)
             );
             // Your custom logic here
         });
-
-        // Populate Dictionary for Villager Level conversion from int to String
-        VILLAGER_LEVEL_DICTIONARY.put(0, "None");
-        VILLAGER_LEVEL_DICTIONARY.put(1, "Novice");
-        VILLAGER_LEVEL_DICTIONARY.put(2, "Apprentice");
-        VILLAGER_LEVEL_DICTIONARY.put(3, "Journeyman");
-        VILLAGER_LEVEL_DICTIONARY.put(4, "Expert");
-        VILLAGER_LEVEL_DICTIONARY.put(5,"Master");
     }
 
     public static String getProfessionName(String profession) {

@@ -12,10 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Payload {
-    // Dieses Record enthält momentan nur eine UUID und eine Profession.
+    // Dieses Record enthält eine UUID, eine Profession und das Level des Villagers.
     // Es kann aber leicht erweitert werden, um weitere Daten über Villager vom Server an den Client zu senden.
-    // Dazu könnten zum Beispiel gehören, welches Level der Villager hat (Apprentice, Journeyman, Master, ...). o. Ä.
-    public record VillagerInfo(String UUID, String profession, int level) {}
+    public record VillagerInfo(String UUID, String profession, String level) {}
 
     // In diesem Record wird die Payload definiert, die an den Client geschickt wird.
     public record VHPayload(List<VillagerInfo> villagerInfos) implements CustomPayload {
@@ -31,7 +30,7 @@ public class Payload {
         public static final PacketCodec<RegistryByteBuf, VillagerInfo> VILLAGER_INFO_CODEC = PacketCodec.tuple(
                 PacketCodecs.STRING, VillagerInfo::UUID,
                 PacketCodecs.STRING, VillagerInfo::profession,
-                PacketCodecs.INTEGER, VillagerInfo::level,
+                PacketCodecs.STRING, VillagerInfo::level,
                 VillagerInfo::new
         );
 
