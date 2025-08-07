@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Payload {
-    // Dieses Record enthält momentan nur eine UUID und eine Profession.
+    // Dieses Record enthält eine UUID, eine Profession und das Level des Villagers.
     // Es kann aber leicht erweitert werden, um weitere Daten über Villager vom Server an den Client zu senden.
-    // Dazu könnten zum Beispiel gehören, welches Level der Villager hat (Apprentice, Journeyman, Master, ...). o. Ä.
-    public record VillagerInfo(String UUID, String profession) {}
+    public record VillagerInfo(String UUID, String profession, String level) {}
 
     // In diesem Record wird die Payload definiert, die an den Client geschickt wird.
-    public record VHPayload(BlockPos blockPos, List<VillagerInfo> villagerInfos) implements CustomPayload {
+    public record VHPayload(List<VillagerInfo> villagerInfos) implements CustomPayload {
         public static final Identifier VHPayloadID = Identifier.of(VillagerQOLMod.MOD_ID, "vh_payload");
         public static final CustomPayload.Id<VHPayload> ID = new CustomPayload.Id<>(VHPayloadID);
 
@@ -31,6 +30,7 @@ public class Payload {
         public static final PacketCodec<RegistryByteBuf, VillagerInfo> VILLAGER_INFO_CODEC = PacketCodec.tuple(
                 PacketCodecs.STRING, VillagerInfo::UUID,
                 PacketCodecs.STRING, VillagerInfo::profession,
+                PacketCodecs.STRING, VillagerInfo::level,
                 VillagerInfo::new
         );
 
@@ -54,13 +54,40 @@ public class Payload {
                         }
                 );
 
-        // Abschließend wird ein Codec erstellt, der blockPos und villagerInfos entpacken und verpacken kann.
+        // Abschließend wird ein Codec erstellt, der Anweisungen für die gesamte Payload enthält.
         public static final PacketCodec<RegistryByteBuf, VHPayload> CODEC = PacketCodec.tuple(
-                BlockPos.PACKET_CODEC, VHPayload::blockPos,
                 VILLAGER_INFO_LIST_CODEC, VHPayload::villagerInfos,
                 VHPayload::new);
 
         @Override
+        public Id<? extends CustomPayload> getId() {
+            return ID;
+        }
+    }
+
+    public record RemoveVillagerPayload(String villagerUUID) implements CustomPayload {
+        public static final Identifier RemoveVillagerPayloadID = Identifier.of("remove_villager_payload_id");
+        public static final CustomPayload.Id<RemoveVillagerPayload> ID = new CustomPayload.Id<>(RemoveVillagerPayloadID);
+
+        public static final PacketCodec<RegistryByteBuf, RemoveVillagerPayload> CODEC = PacketCodec.tuple(
+                PacketCodecs.STRING, RemoveVillagerPayload::villagerUUID,
+                RemoveVillagerPayload::new
+        );
+
+        public Id<? extends CustomPayload> getId() {
+            return ID;
+        }
+    }
+
+    public record OpenTradeMenuPayload(String villagerUUID) implements CustomPayload {
+        public static final Identifier OpenTradeMenuPayloadID = Identifier.of("open_trade_menu_payload_id");
+        public static final CustomPayload.Id<OpenTradeMenuPayload> ID = new CustomPayload.Id<>(OpenTradeMenuPayloadID);
+
+        public static final PacketCodec<RegistryByteBuf, OpenTradeMenuPayload> CODEC = PacketCodec.tuple(
+                PacketCodecs.STRING, OpenTradeMenuPayload::villagerUUID,
+                OpenTradeMenuPayload::new
+        );
+
         public Id<? extends CustomPayload> getId() {
             return ID;
         }

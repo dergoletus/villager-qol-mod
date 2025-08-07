@@ -8,7 +8,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.List;
+
 public class VillagerQOLModClient implements ClientModInitializer {
+
+    public static Dictionary<Integer, String> VILLAGER_LEVEL_DICTIONARY = new Hashtable<>();
 
     @Override
     public void onInitializeClient() {
@@ -20,11 +27,26 @@ public class VillagerQOLModClient implements ClientModInitializer {
             }
 
             System.out.println("used");
+            // Convert payload villagerInfos to villagerInfos with readable data
+            List<Payload.VillagerInfo> readableVillagerInfos = new ArrayList<>();
+            for (Payload.VillagerInfo villagerInfo : payload.villagerInfos()) {
+                readableVillagerInfos.add(new Payload.VillagerInfo(
+                        villagerInfo.UUID(),
+                        getProfessionName(villagerInfo.profession()),
+                        villagerInfo.level()
+                ));
+            }
+
             MinecraftClient.getInstance().setScreen(
-                    new VHGui(Text.empty())
+                    new VHGui(Text.literal("Villager Hub"), readableVillagerInfos)
             );
             // Your custom logic here
         });
+    }
+
+    public static String getProfessionName(String profession) {
+        String professionNameLowerCase = profession.split(":")[1];
+        return professionNameLowerCase.substring(0, 1).toUpperCase() + professionNameLowerCase.substring(1);
     }
 
 }

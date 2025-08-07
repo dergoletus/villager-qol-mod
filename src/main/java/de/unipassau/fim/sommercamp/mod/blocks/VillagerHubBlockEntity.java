@@ -39,7 +39,7 @@ public class VillagerHubBlockEntity extends ChestBlockEntity implements ScreenHa
     }
 
     public void addVillager(String uuid) {
-        if (villagerUUIDs.size() < 3 && !villagerUUIDs.contains(uuid)){
+        if (villagerUUIDs.size() < villagerCapacity && !villagerUUIDs.contains(uuid)){
             villagerUUIDs.add(uuid);
         }
     }

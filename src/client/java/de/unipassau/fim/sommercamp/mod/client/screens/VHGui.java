@@ -1,5 +1,6 @@
 package de.unipassau.fim.sommercamp.mod.client.screens;
 
+import de.unipassau.fim.sommercamp.mod.network.Payload;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -8,11 +9,13 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
 
+import java.util.List;
+
 @Environment(EnvType.CLIENT)
 
 public class VHGui extends Screen {
 
-    public VHGui(Text title) {
+    public VHGui(Text title, List<Payload.VillagerInfo> villagerInfos) {
         super(title);
     }
 

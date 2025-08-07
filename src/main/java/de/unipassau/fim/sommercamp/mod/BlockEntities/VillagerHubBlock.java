@@ -22,12 +22,23 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 public class VillagerHubBlock extends BlockWithEntity{
 
+    public static Dictionary<Integer, String> VILLAGER_LEVEL_DICTIONARY = new Hashtable<>();
+
     public VillagerHubBlock(Settings settings) {
         super(settings);
+        // Populate Dictionary for Villager Level conversion from int to String
+        VILLAGER_LEVEL_DICTIONARY.put(0, "None");
+        VILLAGER_LEVEL_DICTIONARY.put(1, "Novice");
+        VILLAGER_LEVEL_DICTIONARY.put(2, "Apprentice");
+        VILLAGER_LEVEL_DICTIONARY.put(3, "Journeyman");
+        VILLAGER_LEVEL_DICTIONARY.put(4, "Expert");
+        VILLAGER_LEVEL_DICTIONARY.put(5,"Master");
     }
 
     @Override
@@ -53,15 +64,16 @@ public class VillagerHubBlock extends BlockWithEntity{
                     if (villager != null) {
                         villagerInfos.add(new Payload.VillagerInfo(
                                 villager.getUuidAsString(),
-                                villager.getVillagerData().profession().getIdAsString()));
+                                villager.getVillagerData().profession().getIdAsString(),
+                                VILLAGER_LEVEL_DICTIONARY.get(villager.getVillagerData().level())));
                     } else {
-                        villagerInfos.add(new Payload.VillagerInfo(null, null));
+                        villagerInfos.add(new Payload.VillagerInfo(null, null, null));
                     }
                 }
             }
         }
 
-        Payload.VHPayload payload = new Payload.VHPayload(player.getBlockPos(), villagerInfos);
+        Payload.VHPayload payload = new Payload.VHPayload(villagerInfos);
         if(!world.isClient && world.getBlockEntity(pos) instanceof VillagerHubBlockEntity villagerHubBlockEntity){
             for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
                 ServerPlayNetworking.send(user, payload);
