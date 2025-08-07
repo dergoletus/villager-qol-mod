@@ -64,13 +64,24 @@ public class VillagerRegisterItem extends Item {
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
         context.getWorld().getBlockEntity(context.getBlockPos(), ModBlockEntities.VILLAGER_HUB_BE_BLOCK_BLOCK_ENTITY_TYPE)
-                .ifPresentOrElse((blockEntity) -> {
-                    String villagerUUID = context.getStack().get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT);
-                    if (villagerUUID.isEmpty()) {
-                       context.getPlayer().sendMessage(Text.literal("Your villager register is empty! Fill it up by right-clicking a villager."), true);
+                .ifPresentOrElse((villagerHubBlockEntity) -> {
+                    PlayerEntity player = context.getPlayer();
+                    if (player != null) {
+                        String villagerUUID = context.getStack().get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT);
+                        if (villagerUUID.isEmpty()) {
+                            player.sendMessage(Text.literal("Your villager register is empty! Fill it up by right-clicking a villager."), true);
+                        } else if (villagerHubBlockEntity.getVillagerUUIDs().size() == villagerHubBlockEntity.villagerCapacity) {
+                            player.sendMessage(Text.literal("This Villager Hub Block is full!"), true);
+                        } else if (villagerHubBlockEntity.getVillagerUUIDs().contains(villagerUUID)) {
+                            player.sendMessage(Text.literal("This Villager Hub Block already contains UUID " + villagerUUID + ". " +
+                                    "Your villager register has been emptied."), true);
+                            context.getStack().set(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT, "");
+                        } else {
+                            villagerHubBlockEntity.addVillager(villagerUUID);
+                            player.sendMessage(Text.literal("UUID " + villagerUUID + " stored in Villager Hub Block."), true);
+                            context.getStack().set(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT, "");
+                        }
                     }
-
-                    // TODO: Villager UUID dem Villager Hub Block übergeben
                 }, () -> {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {
