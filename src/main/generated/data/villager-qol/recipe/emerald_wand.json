@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "multi_bench",
+  "key": {
+    "e": "villager-qol:compressed_emerald_block",
+    "s": "minecraft:stick"
+  },
+  "pattern": [
+    "e",
+    "s"
+  ],
+  "result": {
+    "count": 1,
+    "id": "villager-qol:emerald_wand"
+  }
+}

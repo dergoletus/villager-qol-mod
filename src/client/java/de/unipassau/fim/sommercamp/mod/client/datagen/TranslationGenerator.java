@@ -35,5 +35,9 @@ public class TranslationGenerator extends FabricLanguageProvider {
         translationBuilder.add(ModItems.COMPRESSED_EMERALD_DESCRIPTION_TRANSLATION_KEY, "The equivalent of 81 emeralds.");
         translationBuilder.add(ModItems.COMPRESSED_EMERALD_BLOCK, "Compressed Emerald Block");
         translationBuilder.add(ModItems.COMPRESSED_EMERALD_BLOCK_DESCRIPTION_TRANSLATION_KEY, "The equivalent of 729 emeralds.");
+        translationBuilder.add(ModItems.EMERALD_WAND_DESCRIPTION_TRANSLATION_KEY, "This Wand restocks villagers");
+        translationBuilder.add(ModItems.EMERALD_WAND, "Emerald Wand");
+        translationBuilder.add(ModItems.EMERALD_MACE_DESCRIPTION_TRANSLATION_KEY, "The Emerald Mace reduces further the prices for longer");
+        translationBuilder.add(ModItems.EMERALD_MACE, "Emerald Mace");
     }
 }

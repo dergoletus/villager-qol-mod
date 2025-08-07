@@ -87,6 +87,30 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Items.EMERALD_BLOCK), conditionsFromItem(Items.EMERALD_BLOCK))
                         .offerTo(exporter);
 
+                //Recipe for Emerald Wand
+                createShaped(RecipeCategory.MISC, ModItems.EMERALD_WAND, 1)
+                        .pattern("e")
+                        .pattern("s")
+                        .input('e', ModItems.COMPRESSED_EMERALD_BLOCK)
+                        .input('s', Items.STICK)
+                        .group("multi_bench")
+                        .criterion(hasItem(Items.EMERALD), conditionsFromItem(Items.EMERALD))
+                        .offerTo(exporter);
+
+                //Recipe for Emerald Mace
+                createShaped(RecipeCategory.MISC, ModItems.EMERALD_MACE, 1)
+                        .pattern("den")
+                        .pattern("eme")
+                        .pattern("nbd")
+                        .input('e', ModItems.COMPRESSED_EMERALD_BLOCK)
+                        .input('m', Items.MACE)
+                        .input('b', ModItems.EMERALD_BLADE)
+                        .input('d', Items.DIAMOND_BLOCK)
+                        .input('n', Items.NETHERITE_INGOT)
+                        .group("multi_bench")
+                        .criterion(hasItem(Items.EMERALD), conditionsFromItem(Items.EMERALD))
+                        .offerTo(exporter);
+
                 // Rezept für Villager Register
                 createShaped(RecipeCategory.MISC, ModItems.VILLAGER_REGISTER, 1)
                         .pattern("cdc")
