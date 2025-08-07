@@ -87,15 +87,6 @@ public class VillagerQOLMod implements ModInitializer {
             VillagerEntity villager = VillagerHubBlockEntity.findVillagerByUUID(serverWorld, payload.villagerUUID());
 
             ((VillagerEntityMixin)(Object)villager).invokeBeginTradeWith(serverPlayer);
-            /*OptionalInt optionalInt = serverPlayer.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, playerInventory, playerx) -> new MerchantScreenHandler(syncId, playerInventory, villager), villager.getDisplayName()));
-
-            if (optionalInt.isPresent()) {
-                TradeOfferList tradeOfferList = villager.getOffers();
-                if (!tradeOfferList.isEmpty()) {
-                    serverPlayer.sendTradeOffers(optionalInt.getAsInt(), tradeOfferList, villager.getVillagerData().level(), villager.getExperience(), villager.isLeveledMerchant(), villager.canRefreshTrades());
-                }
-            }
-            */
 
         });
 
