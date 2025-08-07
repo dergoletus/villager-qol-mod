@@ -34,7 +34,8 @@ public class VHGui extends Screen {
 
         // Register the button widget.
 
-        for(Payload.VillagerInfo villagerInfo : villagerInfoList){
+        for(int i = 0; i < villagerInfoList.size(); i++) {
+            Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
 
             int x = ((this.width - buttonWidth) / 2 ) + 80;
             int y = startY + i * spacing;
@@ -61,9 +62,14 @@ public class VHGui extends Screen {
         // We'll subtract the font height from the Y position to make the text appear above the button.
         // Subtracting an extra 10 pixels will give the text some padding.
         // textRenderer, text, x, y, color, hasShadow
-        for(Payload.VillagerInfo villagerInfo : villagerInfoList){
-            context.drawText(this.textRenderer, villagerInfo.profession() + ", " + villagerInfo.level(), 160, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+        int spacing = 25; // space between buttons
+        int startY = this.height / 4;
+        for(int i = 0; i < villagerInfoList.size(); i++){
+            Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
+            int x = 40;
+            int y = startY + i * spacing;
+            context.drawText(this.textRenderer, villagerInfo.profession() + ", " + villagerInfo.level(), x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
         }
-        context.drawText(this.textRenderer, "Villager Hub", 160, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+        context.drawText(this.textRenderer, "Villager Hub", 200, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
     }
 }
