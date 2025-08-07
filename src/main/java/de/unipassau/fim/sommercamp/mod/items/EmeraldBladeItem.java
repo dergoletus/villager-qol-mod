@@ -36,7 +36,7 @@ public class EmeraldBladeItem extends Item {
                 player.sendMessage(Text.literal("Price reduction is on cooldown! (" + cooldown / 20 + "s left)"), true);
                 return ActionResult.FAIL;
             }
-            var instance = new StatusEffectInstance(StatusEffects.HERO_OF_THE_VILLAGE, 1200, 6, false, true, true);
+            var instance = new StatusEffectInstance(StatusEffects.HERO_OF_THE_VILLAGE, 1200, 9, false, true, true);
             player.addStatusEffect(instance);
             player.sendMessage(Text.literal("Reduced all prices!"), true);
             CooldownHandler.setCooldown(playerId, item, 2400); // 120 seconds
