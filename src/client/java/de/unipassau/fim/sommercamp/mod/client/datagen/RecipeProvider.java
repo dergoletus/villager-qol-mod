@@ -15,11 +15,10 @@ import net.minecraft.registry.RegistryWrapper;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
-public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
-    public FabricDocsReferenceRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+public class RecipeProvider extends FabricRecipeProvider {
+    public RecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, registriesFuture);
     }
 
@@ -121,6 +120,16 @@ public class FabricDocsReferenceRecipeProvider extends FabricRecipeProvider {
                         .input('i', Items.ITEM_FRAME)
                         .group("multi_bench")
                         .criterion(hasItem(Items.DIAMOND), conditionsFromItem(Items.DIAMOND))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.VILLAGER_HUB, 1)
+                        .pattern("rer")
+                        .pattern("ece")
+                        .pattern("rer")
+                        .input('r', ModItems.VILLAGER_REGISTER)
+                        .input('e', ModItems.COMPRESSED_EMERALD)
+                        .input('c', Items.CHEST)
+                        .group("multi_bench")
+                        .criterion(hasItem(ModItems.VILLAGER_REGISTER), conditionsFromItem(ModItems.VILLAGER_REGISTER))
                         .offerTo(exporter);
             }
         };

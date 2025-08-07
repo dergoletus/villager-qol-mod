@@ -21,7 +21,7 @@ import java.util.List;
 
 public class VillagerHubBlockEntity extends BlockEntity {
 
-    public final int villagerCapacity = 3;
+    public final int villagerCapacity = 15;
     private final static List<Payload.VillagerInfo> villagerInfoList = new ArrayList<>();
     private final List<String> villagerUUIDs = new ArrayList<>(villagerCapacity);
 

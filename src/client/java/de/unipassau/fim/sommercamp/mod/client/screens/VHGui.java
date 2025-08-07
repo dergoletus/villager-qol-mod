@@ -23,6 +23,8 @@ public class VHGui extends Screen {
     int realscreenwidth = (int) (screenwidth / transformation_ratio);
     int realscreenheight = (int) (screenheight / transformation_ratio);
 
+    // StartY for Villager descriptions and buttons
+    int startY = 100;
 
     private final List<Payload.VillagerInfo> villagerInfoList;
 
@@ -39,7 +41,6 @@ public class VHGui extends Screen {
         int buttonWidth = 75;
         int buttonHeight = 20;
         int spacing = 25; // space between buttons
-        int startY = this.height / 4;
 
         // It's recommended to use the fixed height of 20 to prevent rendering issues with the button
         // textures.
@@ -52,11 +53,14 @@ public class VHGui extends Screen {
             int x = (int) (realscreenwidth * 0.52);
             int y = startY + i * spacing;
 
-            this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"),(btn) -> {
-                Payload.OpenTradeMenuPayload openTradeMenuPayload = new Payload.OpenTradeMenuPayload(pos, villagerInfo.UUID());
-                MinecraftClient.getInstance().setScreen(null);
-                ClientPlayNetworking.send(openTradeMenuPayload);
-            }).dimensions(x,y,buttonWidth,buttonHeight).build());
+            // Der Trade-Knopf sollte nur dann hinzugefügt werden, wenn der Villager eine Arbeit hat.
+            if (!villagerInfo.profession().equals("None")) {
+                this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"), (btn) -> {
+                    Payload.OpenTradeMenuPayload openTradeMenuPayload = new Payload.OpenTradeMenuPayload(pos, villagerInfo.UUID());
+                    MinecraftClient.getInstance().setScreen(null);
+                    ClientPlayNetworking.send(openTradeMenuPayload);
+                }).dimensions(x, y, buttonWidth, buttonHeight).build());
+            }
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Remove"),(btn) -> {
                 Payload.RemoveVillagerPayload removeVillagerPayload = new Payload.RemoveVillagerPayload(pos, villagerInfo.UUID());
@@ -82,16 +86,15 @@ public class VHGui extends Screen {
         // Subtracting an extra 10 pixels will give the text some padding.
         // textRenderer, text, x, y, color, hasShadow
         int spacing = 25; // space between buttons
-        int startY = this.height / 4;
         for(int i = 0; i < villagerInfoList.size(); i++){
             Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
-            int x = (int) (realscreenwidth*0.35);
+            int x = (int) (realscreenwidth * 0.35);
             int y = startY + 25 + i * spacing;
-            if (villagerInfo.UUID().isEmpty()) {
-                context.drawText(this.textRenderer, "N/A", x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
-            }
-            context.drawText(this.textRenderer, villagerInfo.profession() + ", " + villagerInfo.level(), x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+            String displayText = villagerInfo.profession().equals("None") ? "Jobless Villager" : villagerInfo.level() + " " + villagerInfo.profession();
+            context.drawText(this.textRenderer, displayText, x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
         }
         context.drawText(this.textRenderer, "Villager Hub", realscreenwidth/2 -35, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+        context.drawText(this.textRenderer, "Store villagers in this block to trade with them easily!", 30, 80 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+        context.drawText(this.textRenderer, "Villagers that are dead or out of render distance are automatically removed from the block.", 30, 95 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
     }
 }

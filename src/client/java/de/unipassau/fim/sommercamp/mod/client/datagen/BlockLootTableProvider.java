@@ -7,8 +7,8 @@ import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FabricDocsReferenceBlockLootTableProvider extends FabricBlockLootTableProvider {
-    protected FabricDocsReferenceBlockLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+public class BlockLootTableProvider extends FabricBlockLootTableProvider {
+    protected BlockLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
         super(dataOutput, registryLookup);
     }
 
