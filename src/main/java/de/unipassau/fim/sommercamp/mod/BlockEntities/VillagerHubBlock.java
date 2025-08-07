@@ -47,39 +47,40 @@ public class VillagerHubBlock extends BlockWithEntity{
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         // If the Villager Hub Block is right-clicked with a Villager Register Item, the Hub Block shall not open a GUI
         // but instead let the Item pick up the right click in the method VillagerRegisterItem.onUseBlock(...).
         if (player.getStackInHand(player.getActiveHand()).getItem() == ModItems.VILLAGER_REGISTER) {
             return ActionResult.PASS;
         }
-
-        // Sammeln von Villager UUIDs und ihren Professions
-        List<Payload.VillagerInfo> villagerInfos = new ArrayList<>();
-        if(!world.isClient) {
+        if (!world.isClient) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
-            if (blockEntity instanceof VillagerHubBlockEntity villagerHubBlockEntity) {
-                List<VillagerEntity> villagers = VillagerHubBlockEntity.findVillagersByUUID(world, villagerHubBlockEntity.getVillagerUUIDs());
-                for (VillagerEntity villager : villagers) {
-                    if (villager != null) {
-                        villagerInfos.add(new Payload.VillagerInfo(
-                                villager.getUuidAsString(),
-                                villager.getVillagerData().profession().getIdAsString(),
-                                VILLAGER_LEVEL_DICTIONARY.get(villager.getVillagerData().level())));
-                    } else {
-                        villagerInfos.add(new Payload.VillagerInfo(null, null, null));
-                    }
-                }
-            }
-        }
-
-        Payload.VHPayload payload = new Payload.VHPayload(villagerInfos);
-        if(!world.isClient && world.getBlockEntity(pos) instanceof VillagerHubBlockEntity villagerHubBlockEntity){
-            for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
-                ServerPlayNetworking.send(user, payload);
+            if (blockEntity instanceof VillagerHubBlockEntity villagerHubBlockEntity && player instanceof ServerPlayerEntity serverPlayer) {
+                sendVillagerDataToClient(world, serverPlayer, villagerHubBlockEntity);
             }
         }
         return ActionResult.SUCCESS;
+    }
+
+    public void sendVillagerDataToClient(World world, ServerPlayerEntity player, VillagerHubBlockEntity villagerHubBlockEntity) {
+        // Sammeln von Villager UUIDs und ihren Professions
+        List<Payload.VillagerInfo> villagerInfos = new ArrayList<>();
+        List<VillagerEntity> villagers = VillagerHubBlockEntity.findVillagersByUUID(world, villagerHubBlockEntity.getVillagerUUIDs());
+        for (VillagerEntity villager : villagers) {
+            if (villager != null) {
+                villagerInfos.add(new Payload.VillagerInfo(
+                        villager.getUuidAsString(),
+                        villager.getVillagerData().profession().getIdAsString(),
+                        VILLAGER_LEVEL_DICTIONARY.get(villager.getVillagerData().level())));
+            } else {
+                villagerInfos.add(new Payload.VillagerInfo(null, null, null));
+            }
+        }
+
+        Payload.VHPayload payload = new Payload.VHPayload(villagerHubBlockEntity.getPos(), villagerInfos);
+        //for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
+            ServerPlayNetworking.send(player, payload);
+        //}
     }
 
     @Nullable

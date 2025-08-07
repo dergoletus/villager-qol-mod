@@ -17,7 +17,7 @@ public class Payload {
     public record VillagerInfo(String UUID, String profession, String level) {}
 
     // In diesem Record wird die Payload definiert, die an den Client geschickt wird.
-    public record VHPayload(List<VillagerInfo> villagerInfos) implements CustomPayload {
+    public record VHPayload(BlockPos pos, List<VillagerInfo> villagerInfos) implements CustomPayload {
         public static final Identifier VHPayloadID = Identifier.of(VillagerQOLMod.MOD_ID, "vh_payload");
         public static final CustomPayload.Id<VHPayload> ID = new CustomPayload.Id<>(VHPayloadID);
 
@@ -56,6 +56,7 @@ public class Payload {
 
         // Abschließend wird ein Codec erstellt, der Anweisungen für die gesamte Payload enthält.
         public static final PacketCodec<RegistryByteBuf, VHPayload> CODEC = PacketCodec.tuple(
+                BlockPos.PACKET_CODEC, VHPayload::pos,
                 VILLAGER_INFO_LIST_CODEC, VHPayload::villagerInfos,
                 VHPayload::new);
 
@@ -65,11 +66,12 @@ public class Payload {
         }
     }
 
-    public record RemoveVillagerPayload(String villagerUUID) implements CustomPayload {
+    public record RemoveVillagerPayload(BlockPos pos, String villagerUUID) implements CustomPayload {
         public static final Identifier RemoveVillagerPayloadID = Identifier.of(VillagerQOLMod.MOD_ID,"remove_villager_payload");
         public static final CustomPayload.Id<RemoveVillagerPayload> ID = new CustomPayload.Id<>(RemoveVillagerPayloadID);
 
         public static final PacketCodec<RegistryByteBuf, RemoveVillagerPayload> CODEC = PacketCodec.tuple(
+                BlockPos.PACKET_CODEC, RemoveVillagerPayload::pos,
                 PacketCodecs.STRING, RemoveVillagerPayload::villagerUUID,
                 RemoveVillagerPayload::new
         );
@@ -79,11 +81,12 @@ public class Payload {
         }
     }
 
-    public record OpenTradeMenuPayload(String villagerUUID) implements CustomPayload {
+    public record OpenTradeMenuPayload(BlockPos pos, String villagerUUID) implements CustomPayload {
         public static final Identifier OpenTradeMenuPayloadID = Identifier.of(VillagerQOLMod.MOD_ID, "open_trade_menu_payload_id");
         public static final CustomPayload.Id<OpenTradeMenuPayload> ID = new CustomPayload.Id<>(OpenTradeMenuPayloadID);
 
         public static final PacketCodec<RegistryByteBuf, OpenTradeMenuPayload> CODEC = PacketCodec.tuple(
+                BlockPos.PACKET_CODEC, OpenTradeMenuPayload::pos,
                 PacketCodecs.STRING, OpenTradeMenuPayload::villagerUUID,
                 OpenTradeMenuPayload::new
         );
