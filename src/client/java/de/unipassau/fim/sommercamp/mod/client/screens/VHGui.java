@@ -87,6 +87,9 @@ public class VHGui extends Screen {
             Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
             int x = (int) (realscreenwidth*0.35);
             int y = startY + 25 + i * spacing;
+            if (villagerInfo.UUID().isEmpty()) {
+                context.drawText(this.textRenderer, "N/A", x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+            }
             context.drawText(this.textRenderer, villagerInfo.profession() + ", " + villagerInfo.level(), x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
         }
         context.drawText(this.textRenderer, "Villager Hub", realscreenwidth/2 -35, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);

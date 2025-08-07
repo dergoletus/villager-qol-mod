@@ -73,14 +73,12 @@ public class VillagerHubBlock extends BlockWithEntity{
                         villager.getVillagerData().profession().getIdAsString(),
                         VILLAGER_LEVEL_DICTIONARY.get(villager.getVillagerData().level())));
             } else {
-                villagerInfos.add(new Payload.VillagerInfo(null, null, null));
+                villagerInfos.add(new Payload.VillagerInfo("", "", ""));
             }
         }
 
         Payload.VHPayload payload = new Payload.VHPayload(villagerHubBlockEntity.getPos(), villagerInfos);
-        //for (ServerPlayerEntity user : PlayerLookup.world((ServerWorld) world)) {
             ServerPlayNetworking.send(player, payload);
-        //}
     }
 
 
