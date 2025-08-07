@@ -44,7 +44,11 @@ public class VillagerQOLModClient implements ClientModInitializer {
     }
 
     public static String getProfessionName(String profession) {
-        String professionNameLowerCase = profession.split(":")[1];
-        return professionNameLowerCase.substring(0, 1).toUpperCase() + professionNameLowerCase.substring(1);
+        if(!profession.isEmpty()) {
+            String professionNameLowerCase = profession.split(":")[1];
+            return professionNameLowerCase.substring(0, 1).toUpperCase() + professionNameLowerCase.substring(1);
+        } else {
+            return profession;
+        }
     }
 }
