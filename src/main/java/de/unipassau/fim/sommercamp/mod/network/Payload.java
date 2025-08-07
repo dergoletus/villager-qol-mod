@@ -66,7 +66,7 @@ public class Payload {
     }
 
     public record RemoveVillagerPayload(String villagerUUID) implements CustomPayload {
-        public static final Identifier RemoveVillagerPayloadID = Identifier.of("remove_villager_payload_id");
+        public static final Identifier RemoveVillagerPayloadID = Identifier.of(VillagerQOLMod.MOD_ID,"remove_villager_payload");
         public static final CustomPayload.Id<RemoveVillagerPayload> ID = new CustomPayload.Id<>(RemoveVillagerPayloadID);
 
         public static final PacketCodec<RegistryByteBuf, RemoveVillagerPayload> CODEC = PacketCodec.tuple(
@@ -80,7 +80,7 @@ public class Payload {
     }
 
     public record OpenTradeMenuPayload(String villagerUUID) implements CustomPayload {
-        public static final Identifier OpenTradeMenuPayloadID = Identifier.of("open_trade_menu_payload_id");
+        public static final Identifier OpenTradeMenuPayloadID = Identifier.of(VillagerQOLMod.MOD_ID, "open_trade_menu_payload_id");
         public static final CustomPayload.Id<OpenTradeMenuPayload> ID = new CustomPayload.Id<>(OpenTradeMenuPayloadID);
 
         public static final PacketCodec<RegistryByteBuf, OpenTradeMenuPayload> CODEC = PacketCodec.tuple(

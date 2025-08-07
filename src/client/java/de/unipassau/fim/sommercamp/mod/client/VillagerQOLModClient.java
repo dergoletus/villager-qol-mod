@@ -26,7 +26,7 @@ public class VillagerQOLModClient implements ClientModInitializer {
                 return;
             }
 
-            System.out.println("used");
+            System.out.println("Payload collected on client");
             // Convert payload villagerInfos to villagerInfos with readable data
             List<Payload.VillagerInfo> readableVillagerInfos = new ArrayList<>();
             for (Payload.VillagerInfo villagerInfo : payload.villagerInfos()) {
@@ -41,6 +41,10 @@ public class VillagerQOLModClient implements ClientModInitializer {
                     new VHGui(Text.literal("Villager Hub"), readableVillagerInfos)
             );
             // Your custom logic here
+
+            // Send a packet back to the server
+            Payload.RemoveVillagerPayload removeVillagerPayload = new Payload.RemoveVillagerPayload("Test");
+            ClientPlayNetworking.send(removeVillagerPayload);
         });
     }
 
