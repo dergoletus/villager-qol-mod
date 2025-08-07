@@ -72,7 +72,7 @@ public class VHGui extends Screen {
         this.addDrawableChild(ButtonWidget.builder(Text.of("Close"),(btn) -> {
             MinecraftClient.getInstance().setScreen(null);
         }).dimensions(realscreenwidth/2 -60, (int) (realscreenheight*0.8),120,20).build());
-        System.out.println(realscreenheight );
+        System.out.println(realscreenheight);
     }
 
     @Override

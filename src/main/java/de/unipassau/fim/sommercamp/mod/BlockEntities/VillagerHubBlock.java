@@ -66,7 +66,8 @@ public class VillagerHubBlock extends BlockWithEntity{
         // Sammeln von Villager UUIDs und ihren Professions
         List<Payload.VillagerInfo> villagerInfos = new ArrayList<>();
         List<VillagerEntity> villagers = VillagerHubBlockEntity.findVillagersByUUID(world, villagerHubBlockEntity.getVillagerUUIDs());
-        for (VillagerEntity villager : villagers) {
+        for (int i = 0; i < villagers.size(); i++) {
+            VillagerEntity villager = villagers.get(i);
             if (villager != null) {
                 villagerInfos.add(new Payload.VillagerInfo(
                         villager.getUuidAsString(),
@@ -74,6 +75,8 @@ public class VillagerHubBlock extends BlockWithEntity{
                         VILLAGER_LEVEL_DICTIONARY.get(villager.getVillagerData().level())));
             } else {
                 villagerInfos.add(new Payload.VillagerInfo("", "", ""));
+                // Entfernt die UUID des nicht mehr existenten Villagers aus dem Speicher des Villager Hubs.
+                villagerHubBlockEntity.removeVillager(villagerHubBlockEntity.getVillagerUUIDs().get(i));
             }
         }
 
