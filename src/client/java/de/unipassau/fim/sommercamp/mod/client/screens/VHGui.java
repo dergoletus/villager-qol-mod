@@ -18,16 +18,35 @@ public class VHGui extends Screen {
 
     @Override
     protected void init() {
-        ButtonWidget buttonWidget = ButtonWidget.builder(Text.of("Villager Hub"), (btn) -> {
+        int buttonWidth = 100;
+        int buttonHeight = 20;
+        int spacing = 25; // space between buttons
+        int startY = this.height / 4;
+
+        ButtonWidget villager1 = ButtonWidget.builder(Text.of("Villager Hub"), (btn) -> {
             // When the button is clicked, we can display a toast to the screen.
             this.client.getToastManager().add(
                     SystemToast.create(this.client, SystemToast.Type.NARRATOR_TOGGLE, Text.of("Hello World!"), Text.of("This is a toast."))
             );
         }).dimensions(40, 40, 120, 20).build();
+
         // It's recommended to use the fixed height of 20 to prevent rendering issues with the button
         // textures.
-        this.addDrawableChild(buttonWidget);
+        this.addDrawableChild(villager1);
         // Register the button widget.
+
+        for(int i = 0; i < 3; i ++){
+
+            int x = (this.width - buttonWidth) / 2;
+            int y = startY + i * spacing;
+
+            this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"),(btn) -> {
+
+            }).dimensions(x,y,buttonWidth,buttonHeight).build());
+
+
+        }
+
     }
 
     @Override
