@@ -6,15 +6,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.ScreenHandlerFactory;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -36,11 +32,13 @@ public class VillagerHubBlockEntity extends BlockEntity {
     public void addVillager(String uuid) {
         if (villagerUUIDs.size() < villagerCapacity && !villagerUUIDs.contains(uuid)){
             villagerUUIDs.add(uuid);
+            this.markDirty();
         }
     }
 
     public void removeVillager(String uuid){
         villagerUUIDs.remove(uuid);
+        this.markDirty();
     }
 
     public List<String> getVillagerUUIDs(){
@@ -73,12 +71,9 @@ public class VillagerHubBlockEntity extends BlockEntity {
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
         System.out.println("write nbt " + villagerUUIDs.size());
-        for(String villagerInfo : villagerUUIDs){
-            //NbtCompound compound = new NbtCompound();
-            NbtList nbtList = new NbtList();
-            nbtList.add(NbtString.of(villagerInfo));
-            nbt.put("uuids", nbtList);
-        }
+        NbtList nbtList = new NbtList();
+        nbtList.addAll(villagerUUIDs.stream().map(NbtString::of).toList());
+        nbt.put("uuids", nbtList);
     }
 
     @Override
@@ -87,7 +82,7 @@ public class VillagerHubBlockEntity extends BlockEntity {
 
         NbtList list = nbt.getListOrEmpty("uuids");
         for(NbtElement villagerInfo : list){
-            villagerUUIDs.add(villagerInfo.toString());
+            villagerInfo.asString().ifPresent(villagerUUIDs::add);
         }
 
 
