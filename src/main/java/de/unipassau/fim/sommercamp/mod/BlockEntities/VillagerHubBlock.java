@@ -17,7 +17,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,6 +26,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class VillagerHubBlock extends BlockWithEntity{
+
 
     public static Dictionary<Integer, String> VILLAGER_LEVEL_DICTIONARY = new Hashtable<>();
 
@@ -83,6 +83,8 @@ public class VillagerHubBlock extends BlockWithEntity{
         Payload.VHPayload payload = new Payload.VHPayload(villagerHubBlockEntity.getPos(), villagerInfos);
             ServerPlayNetworking.send(player, payload);
     }
+
+
 
     @Nullable
     @Override

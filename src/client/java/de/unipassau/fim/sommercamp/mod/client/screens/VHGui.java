@@ -13,8 +13,6 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.List;
 
-import static java.lang.Math.round;
-
 @Environment(EnvType.CLIENT)
 
 public class VHGui extends Screen {
