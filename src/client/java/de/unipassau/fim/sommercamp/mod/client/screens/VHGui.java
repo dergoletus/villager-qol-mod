@@ -47,8 +47,8 @@ public class VHGui extends Screen {
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"),(btn) -> {
                 Payload.OpenTradeMenuPayload openTradeMenuPayload = new Payload.OpenTradeMenuPayload(pos, villagerInfo.UUID());
-                ClientPlayNetworking.send(openTradeMenuPayload);
                 MinecraftClient.getInstance().setScreen(null);
+                ClientPlayNetworking.send(openTradeMenuPayload);
             }).dimensions(x,y,buttonWidth,buttonHeight).build());
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Remove"),(btn) -> {

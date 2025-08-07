@@ -7,6 +7,7 @@ import de.unipassau.fim.sommercamp.mod.blocks.VillagerHubBlockEntity;
 import de.unipassau.fim.sommercamp.mod.events.ModEvents;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
+import de.unipassau.fim.sommercamp.mod.mixin.VillagerEntityMixin;
 import de.unipassau.fim.sommercamp.mod.network.CooldownHandler;
 import de.unipassau.fim.sommercamp.mod.network.Payload;
 import net.fabricmc.api.ModInitializer;
@@ -27,6 +28,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.screen.MerchantScreenHandler;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
@@ -34,12 +37,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradeOfferList;
 import net.minecraft.village.TradedItem;
 import net.minecraft.village.VillagerProfession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import static de.unipassau.fim.sommercamp.mod.items.EmeraldWandItem.restockCooldowns;
 
@@ -80,7 +85,18 @@ public class VillagerQOLMod implements ModInitializer {
             ServerPlayerEntity serverPlayer = context.player();
             ServerWorld serverWorld = serverPlayer.getServerWorld();
             VillagerEntity villager = VillagerHubBlockEntity.findVillagerByUUID(serverWorld, payload.villagerUUID());
-            // context.player().openHandledScreen();
+
+            ((VillagerEntityMixin)(Object)villager).invokeBeginTradeWith(serverPlayer);
+            /*OptionalInt optionalInt = serverPlayer.openHandledScreen(new SimpleNamedScreenHandlerFactory((syncId, playerInventory, playerx) -> new MerchantScreenHandler(syncId, playerInventory, villager), villager.getDisplayName()));
+
+            if (optionalInt.isPresent()) {
+                TradeOfferList tradeOfferList = villager.getOffers();
+                if (!tradeOfferList.isEmpty()) {
+                    serverPlayer.sendTradeOffers(optionalInt.getAsInt(), tradeOfferList, villager.getVillagerData().level(), villager.getExperience(), villager.isLeveledMerchant(), villager.canRefreshTrades());
+                }
+            }
+            */
+
         });
 
         ServerTickEvents.END_SERVER_TICK.register(server -> {
