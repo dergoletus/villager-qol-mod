@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "multi_bench",
+  "key": {
+    "b": "villager-qol:emerald_blade",
+    "d": "minecraft:diamond_block",
+    "e": "villager-qol:compressed_emerald_block",
+    "m": "minecraft:mace",
+    "n": "minecraft:netherite_ingot"
+  },
+  "pattern": [
+    "den",
+    "eme",
+    "nbd"
+  ],
+  "result": {
+    "count": 1,
+    "id": "villager-qol:emerald_mace"
+  }
+}

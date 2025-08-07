@@ -2,11 +2,8 @@ package de.unipassau.fim.sommercamp.mod.items;
 
 import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
 import de.unipassau.fim.sommercamp.mod.components.ModComponents;
-import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.LoreComponent;
-import net.minecraft.entity.DamageUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
@@ -53,6 +50,21 @@ public class ModItems {
                             List.of(Text.translatable(EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY))))
                     .maxCount(1),
                     EmeraldBladeItem::new);
+    public static final String EMERALD_WAND_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.emerald_wand.description";
+    public static final EmeraldWandItem EMERALD_WAND = register("emerald_wand",
+            new Item.Settings()
+                    .component(DataComponentTypes.LORE, new LoreComponent(
+                            List.of(Text.translatable(EMERALD_WAND_DESCRIPTION_TRANSLATION_KEY))))
+                    .maxCount(1),
+            EmeraldWandItem::new);
+
+    public static final String EMERALD_MACE_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.emerald_mace.description";
+    public static final EmeraldMaceItem EMERALD_MACE = register("emerald_mace",
+            new Item.Settings()
+                    .component(DataComponentTypes.LORE, new LoreComponent(
+                            List.of(Text.translatable(EMERALD_MACE_DESCRIPTION_TRANSLATION_KEY))))
+                    .maxCount(1),
+            EmeraldMaceItem::new);
 
     public static final String COMPRESSED_EMERALD_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.compressed_emerald.description";
     public static final Item COMPRESSED_EMERALD = register("compressed_emerald",

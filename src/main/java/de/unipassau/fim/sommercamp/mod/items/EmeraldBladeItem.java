@@ -1,5 +1,7 @@
 package de.unipassau.fim.sommercamp.mod.items;
 
+import de.unipassau.fim.sommercamp.mod.network.CooldownHandler;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -18,9 +20,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class EmeraldBladeItem extends Item {
-
-    public static final Map<UUID, Integer> restockCooldowns = new HashMap<>();
-
     public EmeraldBladeItem(Settings settings) {
         super(settings);
     }
@@ -30,33 +29,19 @@ public class EmeraldBladeItem extends Item {
         UUID playerId = player.getUuid();
 
         if (!world.isClient()) {
-            var instance = new StatusEffectInstance(StatusEffects.HERO_OF_THE_VILLAGE, 20000, 255, false, true, true);
-            player.addStatusEffect(instance);
-            player.sendMessage(Text.literal("Reduced all prices!"), true);
-        }
-        if (!world.isClient() && player.isSneaking()) {
-            int cooldown = restockCooldowns.getOrDefault(playerId, 0);
+            Item item = player.getStackInHand(hand).getItem();
+            int cooldown = CooldownHandler.getCooldown(playerId, item);
+
             if (cooldown > 0) {
-                player.sendMessage(Text.literal("Restock is on cooldown! (" + cooldown / 20 + "s left)"), true);
+                player.sendMessage(Text.literal("Price reduction is on cooldown! (" + cooldown / 20 + "s left)"), true);
                 return ActionResult.FAIL;
             }
-
-            int radius = 16;
-            List<VillagerEntity> nearbyVillagers = world.getEntitiesByClass(
-                    VillagerEntity.class,
-                    player.getBoundingBox().expand(radius),
-                    villager -> true
-            );
-            for (VillagerEntity villager : nearbyVillagers) {
-                villager.restock();
-            }
-
-            player.sendMessage(Text.literal("Villagers restocked: " + nearbyVillagers.size()), true);
-            restockCooldowns.put(playerId, 2400); // 2 minutes
-
+            var instance = new StatusEffectInstance(StatusEffects.HERO_OF_THE_VILLAGE, 1200, 6, false, true, true);
+            player.addStatusEffect(instance);
+            player.sendMessage(Text.literal("Reduced all prices!"), true);
+            CooldownHandler.setCooldown(playerId, item, 1200); // 60 seconds
             return ActionResult.SUCCESS;
         }
-
         return super.use(world, player, hand);
     }
 }

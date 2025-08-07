@@ -25,6 +25,8 @@ public class ModItemGroups {
                 entries.add(new ItemStack(ModItems.COMPRESSED_EMERALD));
                 entries.add(new ItemStack(ModItems.COMPRESSED_EMERALD_BLOCK));
                 entries.add(new ItemStack(ModBlocks.VILLAGER_HUB));
+                entries.add(new ItemStack(ModItems.EMERALD_MACE));
+                entries.add(new ItemStack(ModItems.EMERALD_WAND));
             }))
             .build();
 

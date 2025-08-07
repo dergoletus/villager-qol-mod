@@ -5,6 +5,7 @@ import de.unipassau.fim.sommercamp.mod.blocks.ModBlocks;
 import de.unipassau.fim.sommercamp.mod.events.ModEvents;
 import de.unipassau.fim.sommercamp.mod.items.ModItemGroups;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
+import de.unipassau.fim.sommercamp.mod.network.CooldownHandler;
 import de.unipassau.fim.sommercamp.mod.network.payload;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -27,7 +28,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
-import static de.unipassau.fim.sommercamp.mod.items.EmeraldBladeItem.restockCooldowns;
 
 public class VillagerQOLMod implements ModInitializer {
 
@@ -42,9 +42,7 @@ public class VillagerQOLMod implements ModInitializer {
         ModBlocks.init();
         ModBlockEntities.init();
         ModEvents.init();
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
-            restockCooldowns.replaceAll((uuid, ticks) -> Math.max(0, ticks - 1));
-        });
+        ServerTickEvents.END_SERVER_TICK.register(server -> CooldownHandler.tick());
         PayloadTypeRegistry.playS2C().register(payload.VHpayload.ID, payload.VHpayload.CODEC);
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
