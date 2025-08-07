@@ -11,9 +11,18 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
+import static java.lang.Math.round;
+
 @Environment(EnvType.CLIENT)
 
 public class VHGui extends Screen {
+    //screen diamentions
+    int screenwidth = 1920;
+    int screenheight = 1200;
+    double transformation_ratio = 2;
+    int realscreenwidth = (int) (screenwidth / transformation_ratio);
+    int realscreenheight = (int) (screenheight / transformation_ratio);
+
 
     private static List<Payload.VillagerInfo> villagerInfoList;
 
@@ -37,7 +46,7 @@ public class VHGui extends Screen {
         for(int i = 0; i < villagerInfoList.size(); i++) {
             Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
 
-            int x = ((this.width - buttonWidth) / 2 ) + 80;
+            int x = (int) (realscreenwidth * 0.52);
             int y = startY + i * spacing;
 
             this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"),(btn) -> {
@@ -51,7 +60,8 @@ public class VHGui extends Screen {
 
         this.addDrawableChild(ButtonWidget.builder(Text.of("Close"),(btn) -> {
             MinecraftClient.getInstance().setScreen(null);
-        }).dimensions(160,200,120,20).build());
+        }).dimensions(realscreenwidth/2 -60, (int) (realscreenheight*0.8),120,20).build());
+        System.out.println(realscreenheight );
     }
 
     @Override
@@ -66,10 +76,10 @@ public class VHGui extends Screen {
         int startY = this.height / 4;
         for(int i = 0; i < villagerInfoList.size(); i++){
             Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
-            int x = 40;
-            int y = startY + i * spacing;
+            int x = (int) (realscreenwidth*0.35);
+            int y = startY + 25 + i * spacing;
             context.drawText(this.textRenderer, villagerInfo.profession() + ", " + villagerInfo.level(), x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
         }
-        context.drawText(this.textRenderer, "Villager Hub", 200, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+        context.drawText(this.textRenderer, "Villager Hub", realscreenwidth/2 -35, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
     }
 }
