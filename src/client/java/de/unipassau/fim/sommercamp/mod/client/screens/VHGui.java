@@ -92,7 +92,14 @@ public class VHGui extends Screen {
             Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
             int x = (int) (realscreenwidth * 0.35);
             int y = startY + 25 + i * spacing;
-            String displayText = villagerInfo.profession().equals("None") ? "Jobless Villager" : villagerInfo.level() + " " + villagerInfo.profession();
+            String displayText;
+            if (!villagerInfo.name().isEmpty()) {
+                displayText = villagerInfo.name();
+            } else if (!villagerInfo.profession().isEmpty()) {
+                displayText = villagerInfo.level() + " " + villagerInfo.profession();
+            } else {
+                displayText = "Jobless Villager";
+            }
             context.drawText(this.textRenderer, displayText, x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
 
             // Neben dem Text werden noch Icons angezeigt, die einen gewissen Charme in die Sache bringen.

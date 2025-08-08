@@ -69,10 +69,13 @@ public class VillagerHubBlock extends BlockWithEntity{
         for (int i = 0; i < villagers.size(); i++) {
             VillagerEntity villager = villagers.get(i);
             if (villager != null) {
+                String villagerName = villager.getName().getLiteralString();
+                villagerName = villagerName == null ? "" : villagerName;
                 villagerInfos.add(new Payload.VillagerInfo(
                         villager.getUuidAsString(),
                         villager.getVillagerData().profession().getIdAsString(),
-                        VILLAGER_LEVEL_DICTIONARY.get(villager.getVillagerData().level())));
+                        VILLAGER_LEVEL_DICTIONARY.get(villager.getVillagerData().level()),
+                        villagerName));
             } else {
                 // Entfernt die UUID des nicht mehr existenten Villagers aus dem Speicher des Villager Hubs.
                 villagerHubBlockEntity.removeVillager(villagerHubBlockEntity.getVillagerUUIDs().get(i));

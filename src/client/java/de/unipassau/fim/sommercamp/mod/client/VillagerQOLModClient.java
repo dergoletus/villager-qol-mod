@@ -33,7 +33,8 @@ public class VillagerQOLModClient implements ClientModInitializer {
                 readableVillagerInfos.add(new Payload.VillagerInfo(
                         villagerInfo.UUID(),
                         getProfessionName(villagerInfo.profession()),
-                        villagerInfo.level()
+                        villagerInfo.level(),
+                        villagerInfo.name()
                 ));
             }
 
