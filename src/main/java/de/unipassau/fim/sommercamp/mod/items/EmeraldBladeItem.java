@@ -41,6 +41,7 @@ public class EmeraldBladeItem extends Item {
             player.sendMessage(Text.literal("Reduced all prices!"), true);
             CooldownHandler.setCooldown(playerId, item, 2400); // 120 seconds
             return ActionResult.SUCCESS;
+            //unimportant comment
         }
         return super.use(world, player, hand);
     }
