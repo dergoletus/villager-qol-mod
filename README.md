@@ -1,4 +1,4 @@
-# Sommercamp 2025 Mod
+# Villager QOL Mod
 
 ## Links
 
