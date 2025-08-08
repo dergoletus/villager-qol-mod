@@ -95,7 +95,7 @@ public class VHGui extends Screen {
             String displayText;
             if (!villagerInfo.name().isEmpty()) {
                 displayText = villagerInfo.name();
-            } else if (!villagerInfo.profession().isEmpty()) {
+            } else if (!villagerInfo.profession().equals("None")) {
                 displayText = villagerInfo.level() + " " + villagerInfo.profession();
             } else {
                 displayText = "Jobless Villager";
