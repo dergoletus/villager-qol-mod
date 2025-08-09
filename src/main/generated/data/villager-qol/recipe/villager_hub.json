@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "multi_bench",
+  "key": {
+    "c": "minecraft:chest",
+    "e": "villager-qol:compressed_emerald",
+    "r": "villager-qol:villager_register"
+  },
+  "pattern": [
+    "rer",
+    "ece",
+    "rer"
+  ],
+  "result": {
+    "count": 1,
+    "id": "villager-qol:villager_hub"
+  }
+}
