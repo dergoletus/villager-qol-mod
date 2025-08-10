@@ -3,7 +3,11 @@ package de.unipassau.fim.sommercamp.mod.items;
 import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
 import de.unipassau.fim.sommercamp.mod.components.ModComponents;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.LoreComponent;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
@@ -43,13 +47,16 @@ public class ModItems {
             VillagerRegisterItem::new);
 
     public static final String EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.emerald_blade.description";
+
     public static final EmeraldBladeItem EMERALD_BLADE = register("emerald_blade",
             new Item.Settings()
-                    .sword(ToolMaterial.NETHERITE, 1F, .00000000001F)
+                    // Results in 7 attack damage and 1.6 attack speed
+                    .sword(ToolMaterial.NETHERITE, 2, -2.4f)
                     .component(DataComponentTypes.LORE, new LoreComponent(
                             List.of(Text.translatable(EMERALD_BLADE_DESCRIPTION_TRANSLATION_KEY))))
                     .maxCount(1),
                     EmeraldBladeItem::new);
+
     public static final String EMERALD_WAND_DESCRIPTION_TRANSLATION_KEY = "item.villager-qol.emerald_wand.description";
     public static final EmeraldWandItem EMERALD_WAND = register("emerald_wand",
             new Item.Settings()

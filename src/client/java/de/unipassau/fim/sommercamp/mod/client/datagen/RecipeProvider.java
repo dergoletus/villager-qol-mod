@@ -55,7 +55,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                         .pattern("eee")
                         .pattern("eee")
                         .input('e', Items.EMERALD_BLOCK)
-                        .group("muli_bench")
+                        .group("multi_bench")
                         .criterion(hasItem(Items.EMERALD), conditionsFromItem(Items.EMERALD))
                         .offerTo(exporter, RegistryKey.of(RegistryKeys.RECIPE, Identifier.of("emerald_block_to_compressed")));
                 createShapeless(RecipeCategory.MISC, Items.EMERALD_BLOCK, 9)
