@@ -27,7 +27,7 @@
 		]
 	},
 	"mixins": [
-		"mixin/villager.mixin.json",
+      "mixin/villager-qol.mixin.json",
 		{
 			"config": "disable.features.mixin.json",
 			"environment": "client"
