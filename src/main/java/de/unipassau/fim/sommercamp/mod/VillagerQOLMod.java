@@ -85,8 +85,10 @@ public class VillagerQOLMod implements ModInitializer {
             ServerPlayerEntity serverPlayer = context.player();
             ServerWorld serverWorld = serverPlayer.getServerWorld();
             VillagerEntity villager = VillagerHubBlockEntity.findVillagerByUUID(serverWorld, payload.villagerUUID());
+
             if (villager != null) {
-                ((VillagerEntityMixin) (Object) villager).invokeBeginTradeWith(serverPlayer);
+                System.out.println("Invoking trade screen");
+                ((VillagerEntityMixin) villager).invokeBeginTradeWith(serverPlayer);
             }
         });
 

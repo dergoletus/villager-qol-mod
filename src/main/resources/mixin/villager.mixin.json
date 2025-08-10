@@ -2,7 +2,7 @@
   "required": true,
   "package": "de.unipassau.fim.sommercamp.mod.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": [
+  "mixins": [
     "VillagerEntityMixin"
   ],
   "injectors": {
