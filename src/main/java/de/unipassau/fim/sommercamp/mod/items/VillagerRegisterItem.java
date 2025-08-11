@@ -36,8 +36,6 @@ public class VillagerRegisterItem extends Item {
     public static ActionResult useOnVillager(ItemStack stack, PlayerEntity player, Entity villager, Hand hand) {
         String villagerUUID = villager.getUuidAsString();
 
-        System.out.println(stack.get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT));
-
         // If the Villager Register is already full, a UUID cannot be added.
         if (!stack.get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT).isEmpty()) {
             player.sendMessage(Text.literal("Your Villager Register is full!"), true);

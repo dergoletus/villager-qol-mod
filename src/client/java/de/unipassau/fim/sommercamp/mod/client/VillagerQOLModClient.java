@@ -9,8 +9,6 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 
 public class VillagerQOLModClient implements ClientModInitializer {

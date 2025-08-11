@@ -1,7 +1,6 @@
 package de.unipassau.fim.sommercamp.mod.blocks;
 
 import de.unipassau.fim.sommercamp.mod.BlockEntities.ModBlockEntities;
-import de.unipassau.fim.sommercamp.mod.network.Payload;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
