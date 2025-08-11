@@ -6,6 +6,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -13,6 +15,7 @@ import net.minecraft.nbt.NbtString;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.village.TradeOffer;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -22,7 +25,6 @@ import java.util.List;
 public class VillagerHubBlockEntity extends BlockEntity {
 
     public final int villagerCapacity = 15;
-    private final static List<Payload.VillagerInfo> villagerInfoList = new ArrayList<>();
     private final List<String> villagerUUIDs = new ArrayList<>(villagerCapacity);
 
     public VillagerHubBlockEntity(BlockPos pos, BlockState state) {
@@ -70,7 +72,6 @@ public class VillagerHubBlockEntity extends BlockEntity {
     @Override
     protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         super.writeNbt(nbt, registryLookup);
-        System.out.println("write nbt " + villagerUUIDs.size());
         NbtList nbtList = new NbtList();
         nbtList.addAll(villagerUUIDs.stream().map(NbtString::of).toList());
         nbt.put("uuids", nbtList);
@@ -84,11 +85,25 @@ public class VillagerHubBlockEntity extends BlockEntity {
         for(NbtElement villagerInfo : list){
             villagerInfo.asString().ifPresent(villagerUUIDs::add);
         }
-
-
     }
     @Override
     public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup registryLookup) {
         return createNbt(registryLookup);
+    }
+
+    public static List<Integer> getOutOfStockItemIDs(VillagerEntity villager) {
+        List<Integer> outOfStockItemIDs = new ArrayList<>();
+        for (TradeOffer tradeOffer : villager.getOffers()) {
+            if (tradeOffer.isDisabled()) {
+                Item buyItem = tradeOffer.getFirstBuyItem().itemStack().getItem();
+                Item sellItem = tradeOffer.getSellItem().getItem();
+                if (buyItem == Items.EMERALD) {
+                    outOfStockItemIDs.add(Item.getRawId(sellItem));
+                } else {
+                    outOfStockItemIDs.add(Item.getRawId(buyItem));
+                }
+            }
+        }
+        return outOfStockItemIDs;
     }
 }
