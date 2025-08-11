@@ -15,6 +15,8 @@ import java.util.List;
 
 public class VillagerQOLModClient implements ClientModInitializer {
 
+    public static Dictionary<Integer, String> VILLAGER_LEVEL_DICTIONARY = new Hashtable<>();
+
     @Override
     public void onInitializeClient() {
         ClientPlayNetworking.registerGlobalReceiver(Payload.VHPayload.ID, (payload, context) -> {
@@ -24,6 +26,7 @@ public class VillagerQOLModClient implements ClientModInitializer {
                 return;
             }
 
+            System.out.println("Payload collected on client");
             // Convert payload villagerInfos to villagerInfos with readable data
             List<Payload.VillagerInfo> readableVillagerInfos = new ArrayList<>();
             for (Payload.VillagerInfo villagerInfo : payload.villagerInfos()) {
@@ -31,8 +34,7 @@ public class VillagerQOLModClient implements ClientModInitializer {
                         villagerInfo.UUID(),
                         getProfessionName(villagerInfo.profession()),
                         villagerInfo.level(),
-                        villagerInfo.name(),
-                        villagerInfo.outOfStockItems()
+                        villagerInfo.name()
                 ));
             }
 

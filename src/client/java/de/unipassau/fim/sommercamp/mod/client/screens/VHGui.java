@@ -8,7 +8,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
@@ -63,14 +62,14 @@ public class VHGui extends Screen {
 
             // Der Trade-Knopf sollte nur dann hinzugefügt werden, wenn der Villager eine Arbeit hat.
             if (!villagerInfo.profession().equals("None")) {
-                this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"), (_) -> {
+                this.addDrawableChild(ButtonWidget.builder(Text.of("Trade"), (btn) -> {
                     Payload.OpenTradeMenuPayload openTradeMenuPayload = new Payload.OpenTradeMenuPayload(pos, villagerInfo.UUID());
                     MinecraftClient.getInstance().setScreen(null);
                     ClientPlayNetworking.send(openTradeMenuPayload);
                 }).dimensions(x, y, buttonWidth, buttonHeight).build());
             }
 
-            this.addDrawableChild(ButtonWidget.builder(Text.of("Remove"),(_) -> {
+            this.addDrawableChild(ButtonWidget.builder(Text.of("Remove"),(btn) -> {
                 Payload.RemoveVillagerPayload removeVillagerPayload = new Payload.RemoveVillagerPayload(pos, villagerInfo.UUID());
                 ClientPlayNetworking.send(removeVillagerPayload);
                 // Remove-Knopf schließt die GUI und der Server schickt ein neues Packet, dass die GUI erneut öffnet
@@ -79,8 +78,10 @@ public class VHGui extends Screen {
             }).dimensions(x + 80, y, buttonWidth, buttonHeight).build());
         }
 
-        this.addDrawableChild(ButtonWidget.builder(Text.of("Close"),(_) ->
-                MinecraftClient.getInstance().setScreen(null)).dimensions(realscreenwidth / 2 - 60, (int) (realscreenheight * 0.8),120,20).build());
+        this.addDrawableChild(ButtonWidget.builder(Text.of("Close"),(btn) -> {
+            MinecraftClient.getInstance().setScreen(null);
+        }).dimensions(realscreenwidth / 2 - 60, (int) (realscreenheight * 0.8),120,20).build());
+        System.out.println(realscreenheight);
     }
 
     @Override
@@ -115,18 +116,7 @@ public class VHGui extends Screen {
                 displayText += "Jobless Villager";
             }
 
-            int endOfTextX = context.drawText(this.textRenderer, displayText, x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
-
-
-            if (!villagerInfo.outOfStockItems().isEmpty()) {
-                // Nun werden die Icons hinzugefügt, die anzeigen, welche trades out of stock sind.
-                endOfTextX += 5;
-                context.drawItem(new ItemStack(Items.BARRIER), endOfTextX, y - 23);
-                for (int j = 0; j < villagerInfo.outOfStockItems().size(); j++) {
-                    int outOfStockItemID = villagerInfo.outOfStockItems().get(j);
-                    context.drawItem(new ItemStack(Item.byRawId(outOfStockItemID)), endOfTextX + 17 * (j + 1), y - 23);
-                }
-            }
+            context.drawText(this.textRenderer, displayText, x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
 
             // Neben dem Text werden noch Icons angezeigt, die einen gewissen Charme in die Sache bringen.
             if (!villagerInfo.profession().equals("None")) {
