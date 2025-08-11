@@ -1,6 +1,7 @@
 package de.unipassau.fim.sommercamp.mod.network;
 
 import de.unipassau.fim.sommercamp.mod.VillagerQOLMod;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
@@ -13,7 +14,7 @@ import java.util.List;
 public class Payload {
     // Dieses Record enthält eine UUID, eine Profession, das Level des Villagers und eine Integerliste, die Items angibt, die out of Stock sind.
     // Es kann aber leicht erweitert werden, um weitere Daten über Villager vom Server an den Client zu senden.
-    public record VillagerInfo(String UUID, String profession, String level, String name, List<Integer> outOfStockItems) {}
+    public record VillagerInfo(String UUID, String profession, String level, String name, List<ItemStack> outOfStockItems) {}
 
     // In diesem Record wird die Payload definiert, die an den Client geschickt wird.
     public record VHPayload(BlockPos pos, List<VillagerInfo> villagerInfos) implements CustomPayload {
@@ -31,7 +32,7 @@ public class Payload {
                 PacketCodecs.STRING, VillagerInfo::profession,
                 PacketCodecs.STRING, VillagerInfo::level,
                 PacketCodecs.STRING, VillagerInfo::name,
-                PacketCodecs.INTEGER.collect(PacketCodecs.toList()), VillagerInfo::outOfStockItems,
+                ItemStack.PACKET_CODEC.collect(PacketCodecs.toList()), VillagerInfo::outOfStockItems,
                 VillagerInfo::new
         );
 

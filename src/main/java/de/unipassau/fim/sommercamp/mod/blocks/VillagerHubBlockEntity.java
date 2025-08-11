@@ -5,7 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -90,19 +90,19 @@ public class VillagerHubBlockEntity extends BlockEntity {
         return createNbt(registryLookup);
     }
 
-    public static List<Integer> getOutOfStockItemIDs(VillagerEntity villager) {
-        List<Integer> outOfStockItemIDs = new ArrayList<>();
+    public static List<ItemStack> getOutOfStockItems(VillagerEntity villager) {
+        List<ItemStack> outOfStockItems = new ArrayList<>();
         for (TradeOffer tradeOffer : villager.getOffers()) {
             if (tradeOffer.isDisabled()) {
-                Item buyItem = tradeOffer.getFirstBuyItem().itemStack().getItem();
-                Item sellItem = tradeOffer.getSellItem().getItem();
-                if (buyItem == Items.EMERALD) {
-                    outOfStockItemIDs.add(Item.getRawId(sellItem));
+                ItemStack buyItem = tradeOffer.getFirstBuyItem().itemStack();
+                ItemStack sellItem = tradeOffer.getSellItem();
+                if (buyItem.getItem() == Items.EMERALD) {
+                    outOfStockItems.add(sellItem);
                 } else {
-                    outOfStockItemIDs.add(Item.getRawId(buyItem));
+                    outOfStockItems.add(buyItem);
                 }
             }
         }
-        return outOfStockItemIDs;
+        return outOfStockItems;
     }
 }

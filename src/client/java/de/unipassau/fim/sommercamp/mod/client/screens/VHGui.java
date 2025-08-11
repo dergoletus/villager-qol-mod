@@ -8,7 +8,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
@@ -121,22 +120,58 @@ public class VHGui extends Screen {
             if (!villagerInfo.outOfStockItems().isEmpty()) {
                 // Nun werden die Icons hinzugefügt, die anzeigen, welche trades out of stock sind.
                 endOfTextX += 5;
-                context.drawItem(new ItemStack(Items.BARRIER), endOfTextX, y - 23);
+                int barrierX = endOfTextX;
+                int barrierY = y - 23;
+                context.drawItem(new ItemStack(Items.BARRIER), barrierX, barrierY);
+
+                int barrierCenterX = barrierX + 8;
+                int barrierCenterY = barrierY + 8;
+                if (barrierCenterX - 8 < mouseX && mouseX < barrierCenterX + 8 && barrierCenterY - 8 < mouseY && mouseY < barrierCenterY + 8) {
+                    context.drawTooltip(this.textRenderer, Text.of("The following items are out of stock:"), barrierCenterX, barrierCenterY);
+                }
+
                 for (int j = 0; j < villagerInfo.outOfStockItems().size(); j++) {
-                    int outOfStockItemID = villagerInfo.outOfStockItems().get(j);
-                    context.drawItem(new ItemStack(Item.byRawId(outOfStockItemID)), endOfTextX + 17 * (j + 1), y - 23);
+                    ItemStack outOfStockItem = villagerInfo.outOfStockItems().get(j);
+                    int itemX = endOfTextX + 17 * (j + 1);
+                    int itemY = y - 23;
+                    context.drawItem(outOfStockItem, itemX, itemY);
+
+                    int itemCenterX = itemX + 8;
+                    int itemCenterY = itemY + 8;
+                    if (itemCenterX - 8 < mouseX && mouseX < itemCenterX + 8 && itemCenterY - 8 < mouseY && mouseY < itemCenterY + 8) {
+                        context.drawItemTooltip(this.textRenderer, outOfStockItem, itemCenterX, itemCenterY);
+                    }
                 }
             }
 
             // Neben dem Text werden noch Icons angezeigt, die einen gewissen Charme in die Sache bringen.
             if (!villagerInfo.profession().equals("None")) {
-                context.drawItem(getWorkstationIcon(villagerInfo.profession()), buttonX - 40, y - 23);
-                context.drawItem(getLevelIcon(villagerInfo.level()), buttonX - 20, y - 23);
+                int itemX = buttonX - 40;
+                int itemY = y - 23;
+                ItemStack workstationItem = getWorkstationItem(villagerInfo.profession());
+                context.drawItem(workstationItem, itemX, itemY);
+
+                int itemCenterX = itemX + 8;
+                int itemCenterY = itemY + 8;
+                if (itemCenterX - 8 < mouseX && mouseX < itemCenterX + 8 && itemCenterY - 8 < mouseY && mouseY < itemCenterY + 8) {
+                    context.drawItemTooltip(this.textRenderer, workstationItem, itemCenterX, itemCenterY);
+                }
+
+                itemX = buttonX - 20;
+                ItemStack levelItem = getLevelItem(villagerInfo.level());
+                context.drawItem(levelItem, itemX, itemY);
+
+                itemCenterX = itemX + 8;
+                itemCenterY = itemY + 8;
+                if (itemCenterX - 8 < mouseX && mouseX < itemCenterX + 8 && itemCenterY - 8 < mouseY && mouseY < itemCenterY + 8) {
+                    context.drawItemTooltip(this.textRenderer, levelItem, itemCenterX, itemCenterY);
+                }
+
             }
         }
     }
 
-    private ItemStack getWorkstationIcon(String profession) {
+    private ItemStack getWorkstationItem(String profession) {
         return switch (profession) {
             case "Armorer" -> new ItemStack(Items.BLAST_FURNACE);
             case "Butcher" -> new ItemStack(Items.SMOKER);
@@ -155,7 +190,7 @@ public class VHGui extends Screen {
         };
     }
 
-    private ItemStack getLevelIcon(String level) {
+    private ItemStack getLevelItem(String level) {
         return switch (level) {
             case "Novice" -> new ItemStack(Items.CLAY_BALL);
             case "Apprentice" -> new ItemStack(Items.BRICK);
