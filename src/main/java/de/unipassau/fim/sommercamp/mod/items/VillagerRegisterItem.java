@@ -64,6 +64,7 @@ public class VillagerRegisterItem extends Item {
                     PlayerEntity player = context.getPlayer();
                     if (player != null) {
                         String villagerUUID = context.getStack().get(ModComponents.VILLAGER_REGISTER_UUID_COMPONENT);
+                        assert villagerUUID != null;
                         if (villagerUUID.isEmpty()) {
                             player.sendMessage(Text.literal("Your villager register is empty! Fill it up by right-clicking a villager."), true);
                         } else if (villagerHubBlockEntity.getVillagerUUIDs().size() == villagerHubBlockEntity.villagerCapacity) {
