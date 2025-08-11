@@ -16,7 +16,6 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -28,23 +27,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.screen.MerchantScreenHandler;
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.village.TradeOffer;
-import net.minecraft.village.TradeOfferList;
 import net.minecraft.village.TradedItem;
 import net.minecraft.village.VillagerProfession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 import static de.unipassau.fim.sommercamp.mod.items.EmeraldWandItem.restockCooldowns;
 
@@ -87,136 +78,135 @@ public class VillagerQOLMod implements ModInitializer {
             VillagerEntity villager = VillagerHubBlockEntity.findVillagerByUUID(serverWorld, payload.villagerUUID());
 
             if (villager != null) {
-                System.out.println("Invoking trade screen");
                 ((VillagerEntityMixin) villager).invokeBeginTradeWith(serverPlayer);
             }
         });
 
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
+        ServerTickEvents.END_SERVER_TICK.register(_ -> {
             restockCooldowns.replaceAll((uuid, ticks) -> Math.max(0, ticks - 1));
         });
-        ServerTickEvents.END_SERVER_TICK.register(server -> CooldownHandler.tick());
+        ServerTickEvents.END_SERVER_TICK.register(_ -> CooldownHandler.tick());
 
         registerVillagerTrades();
     }
 
     public static void registerVillagerTrades() {
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.LIBRARIAN, 1, factories -> {
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.SHARPNESS, 5),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.EFFICIENCY, 5),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.PROTECTION, 4),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.AQUA_AFFINITY, 1),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.DEPTH_STRIDER, 3),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.FEATHER_FALLING, 4),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.RESPIRATION, 3),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.BREACH, 4),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.DENSITY, 5),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.FIRE_ASPECT, 2),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.LOOTING, 3),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.SMITE, 5),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.SWEEPING_EDGE, 3),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.FLAME, 1),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.INFINITY, 1),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.POWER, 5),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.PUNCH, 2),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.FORTUNE, 3),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.SILK_TOUCH, 1),
                     0, 999999, 100, 0));
 
-            factories.add((entity, random) -> new TradeOffer(
+            factories.add((entity, _) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 64),
                     Optional.of(new TradedItem(Items.BOOK, 1)),
                     enchantedBook(entity, Enchantments.MENDING, 1),

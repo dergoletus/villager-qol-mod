@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec;
 import de.unipassau.fim.sommercamp.mod.blocks.VillagerHubBlockEntity;
 import de.unipassau.fim.sommercamp.mod.items.ModItems;
 import de.unipassau.fim.sommercamp.mod.network.Payload;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
@@ -13,7 +12,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -75,7 +73,8 @@ public class VillagerHubBlock extends BlockWithEntity{
                         villager.getUuidAsString(),
                         villager.getVillagerData().profession().getIdAsString(),
                         VILLAGER_LEVEL_DICTIONARY.get(villager.getVillagerData().level()),
-                        villagerName));
+                        villagerName,
+                        VillagerHubBlockEntity.getOutOfStockItemIDs(villager)));
             } else {
                 // Entfernt die UUID des nicht mehr existenten Villagers aus dem Speicher des Villager Hubs.
                 villagerHubBlockEntity.removeVillager(villagerHubBlockEntity.getVillagerUUIDs().get(i));
