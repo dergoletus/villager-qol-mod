@@ -82,7 +82,9 @@ public class VillagerQOLMod implements ModInitializer {
             }
         });
 
-        ServerTickEvents.END_SERVER_TICK.register(_ -> restockCooldowns.replaceAll((_, ticks) -> Math.max(0, ticks - 1)));
+        ServerTickEvents.END_SERVER_TICK.register(_ -> {
+            restockCooldowns.replaceAll((uuid, ticks) -> Math.max(0, ticks - 1));
+        });
         ServerTickEvents.END_SERVER_TICK.register(_ -> CooldownHandler.tick());
 
         registerVillagerTrades();
