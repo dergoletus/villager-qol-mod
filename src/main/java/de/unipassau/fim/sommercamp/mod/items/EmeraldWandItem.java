@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.village.TradeOffer;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -39,8 +40,13 @@ public class EmeraldWandItem extends Item{
                     player.getBoundingBox().expand(radius),
                     villager -> true
             );
-            for (VillagerEntity villager : nearbyVillagers) {
-                villager.restock();
+            for(int i = 0; i< 2; i++) {
+                for (VillagerEntity villager : nearbyVillagers) {
+                    for (TradeOffer v : villager.getOffers()) {
+                        v.setSpecialPrice(0);
+                    }
+                    villager.restock();
+                }
             }
 
             player.sendMessage(Text.literal("Villagers restocked: " + nearbyVillagers.size()), true);
