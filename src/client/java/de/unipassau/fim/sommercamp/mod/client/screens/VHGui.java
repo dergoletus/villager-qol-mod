@@ -25,8 +25,13 @@ public class VHGui extends Screen {
     int realscreenwidth = (int) (screenwidth / transformation_ratio);
     int realscreenheight = (int) (screenheight / transformation_ratio);
 
-    // StartY for Villager descriptions and buttons
-    int startY = 100;
+    // StartX and Y for villager descriptions
+    int descriptionX = (int) (realscreenwidth * 0.35);
+    int descriptionY = 100;
+
+    // ButtonX and Y for villager buttons
+    int buttonX = descriptionX + 300;
+    int buttonY = descriptionY;
 
     private final List<Payload.VillagerInfo> villagerInfoList;
 
@@ -52,8 +57,8 @@ public class VHGui extends Screen {
         for(int i = 0; i < villagerInfoList.size(); i++) {
             Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
 
-            int x = (int) (realscreenwidth * 0.54);
-            int y = startY + i * spacing;
+            int x = buttonX;
+            int y = buttonY + i * spacing;
 
             // Der Trade-Knopf sollte nur dann hinzugefügt werden, wenn der Villager eine Arbeit hat.
             if (!villagerInfo.profession().equals("None")) {
@@ -70,12 +75,12 @@ public class VHGui extends Screen {
                 // Remove-Knopf schließt die GUI und der Server schickt ein neues Packet, dass die GUI erneut öffnet
                 // So kann die GUI aktualisiert werden
                 MinecraftClient.getInstance().setScreen(null);
-            }).dimensions(x + 80,y,buttonWidth,buttonHeight).build());
+            }).dimensions(x + 80, y, buttonWidth, buttonHeight).build());
         }
 
         this.addDrawableChild(ButtonWidget.builder(Text.of("Close"),(btn) -> {
             MinecraftClient.getInstance().setScreen(null);
-        }).dimensions(realscreenwidth/2 -60, (int) (realscreenheight*0.8),120,20).build());
+        }).dimensions(realscreenwidth / 2 - 60, (int) (realscreenheight * 0.8),120,20).build());
         System.out.println(realscreenheight);
     }
 
@@ -83,37 +88,45 @@ public class VHGui extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
+        // Draw header and information
+
         // Minecraft doesn't have a "label" widget, so we'll have to draw our own text.
         // We'll subtract the font height from the Y position to make the text appear above the button.
         // Subtracting an extra 10 pixels will give the text some padding.
         // textRenderer, text, x, y, color, hasShadow
+
+        context.drawText(this.textRenderer, "Villager Hub", realscreenwidth / 2 - 35, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+        context.drawText(this.textRenderer, "Store villagers in this block to trade with them easily!", 30, 60 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+        context.drawText(this.textRenderer, "Villagers that are dead or out of render distance are automatically removed from the block.", 30, 75 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
+
         int spacing = 25; // space between buttons
-        for(int i = 0; i < villagerInfoList.size(); i++){
+
+        for (int i = 0; i < villagerInfoList.size(); i++){
             Payload.VillagerInfo villagerInfo = villagerInfoList.get(i);
-            int x = (int) (realscreenwidth * 0.35);
-            int y = startY + 25 + i * spacing;
-            String displayText;
+
+            int x = descriptionX;
+            int y = descriptionY + 25 + i * spacing;
+
+            String displayText = (i + 1) + ". ";
             if (!villagerInfo.name().isEmpty()) {
-                displayText = villagerInfo.name();
+                displayText += villagerInfo.name();
             } else if (!villagerInfo.profession().equals("None")) {
-                displayText = villagerInfo.level() + " " + villagerInfo.profession();
+                displayText += villagerInfo.level() + " " + villagerInfo.profession();
             } else {
-                displayText = "Jobless Villager";
+                displayText += "Jobless Villager";
             }
+
             context.drawText(this.textRenderer, displayText, x, y - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
 
             // Neben dem Text werden noch Icons angezeigt, die einen gewissen Charme in die Sache bringen.
             if (!villagerInfo.profession().equals("None")) {
-                context.drawItem(getWorkstationIcon(villagerInfo.profession()), x + 140, y - 23);
-                context.drawItem(getLevelIcon(villagerInfo.level()), x + 160, y - 23);
+                context.drawItem(getWorkstationIcon(villagerInfo.profession()), buttonX - 40, y - 23);
+                context.drawItem(getLevelIcon(villagerInfo.level()), buttonX - 20, y - 23);
             }
         }
-        context.drawText(this.textRenderer, "Villager Hub", realscreenwidth/2 -35, 40 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
-        context.drawText(this.textRenderer, "Store villagers in this block to trade with them easily!", 30, 80 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
-        context.drawText(this.textRenderer, "Villagers that are dead or out of render distance are automatically removed from the block.", 30, 95 - this.textRenderer.fontHeight - 10, 0xFFFFFFFF, true);
     }
 
-    public ItemStack getWorkstationIcon(String profession) {
+    private ItemStack getWorkstationIcon(String profession) {
         return switch (profession) {
             case "Armorer" -> new ItemStack(Items.BLAST_FURNACE);
             case "Butcher" -> new ItemStack(Items.SMOKER);
