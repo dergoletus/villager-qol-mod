@@ -6,9 +6,11 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.LoreComponent;
+import net.minecraft.component.type.WeaponComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
+import net.minecraft.item.MaceItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -70,6 +72,9 @@ public class ModItems {
             new Item.Settings()
                     .component(DataComponentTypes.LORE, new LoreComponent(
                             List.of(Text.translatable(EMERALD_MACE_DESCRIPTION_TRANSLATION_KEY))))
+                    .component(DataComponentTypes.TOOL, MaceItem.createToolComponent())
+                    .component(DataComponentTypes.WEAPON, new WeaponComponent(1))
+                    .attributeModifiers(MaceItem.createAttributeModifiers())
                     .maxCount(1),
             EmeraldMaceItem::new);
 

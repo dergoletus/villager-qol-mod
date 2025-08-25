@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minecraft:item/handheld_mace",
   "textures": {
     "layer0": "villager-qol:item/emerald_mace"
   }

@@ -164,7 +164,20 @@ public class VHGui extends Screen {
                 itemCenterX = itemX + 8;
                 itemCenterY = itemY + 8;
                 if (itemCenterX - 8 < mouseX && mouseX < itemCenterX + 8 && itemCenterY - 8 < mouseY && mouseY < itemCenterY + 8) {
-                    context.drawItemTooltip(this.textRenderer, levelItem, itemCenterX, itemCenterY);
+                    context.drawItemTooltip(this.textRenderer, levelItem
+
+
+
+
+
+
+
+
+
+
+
+
+                            , itemCenterX, itemCenterY);
                 }
 
             }

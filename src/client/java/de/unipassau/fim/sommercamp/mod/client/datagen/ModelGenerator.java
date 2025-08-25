@@ -34,6 +34,6 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(ModItems.COMPRESSED_EMERALD_BLOCK,
                 new Model(Optional.of(Identifier.of("minecraft", "block/emerald_block")), Optional.empty()));
         itemModelGenerator.register(ModItems.EMERALD_WAND, Models.HANDHELD);
-        itemModelGenerator.register(ModItems.EMERALD_MACE, Models.HANDHELD);
+        itemModelGenerator.register(ModItems.EMERALD_MACE, Models.HANDHELD_MACE);
     }
 }
